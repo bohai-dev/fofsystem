@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bohai.fofsystem.dao.CompanyInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.bohai.fofsystem.domain.CompanyInfo" >
+    <id column="COMPANY_ID" property="companyId" jdbcType="VARCHAR" />
+    <result column="SIMPLE_NAME" property="simpleName" jdbcType="VARCHAR" />
+    <result column="FULL_NAME" property="fullName" jdbcType="VARCHAR" />
+    <result column="BUILD_TIME" property="buildTime" jdbcType="VARCHAR" />
+    <result column="RECORD_TIME" property="recordTime" jdbcType="VARCHAR" />
+    <result column="SIMPLE_INTRO" property="simpleIntro" jdbcType="VARCHAR" />
+    <result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATED_TIME" property="updatedTime" jdbcType="TIMESTAMP" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="VARCHAR" />
+    <result column="BACK_COLUMN1" property="backColumn1" jdbcType="VARCHAR" />
+    <result column="BACK_COLUMN2" property="backColumn2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    COMPANY_ID, SIMPLE_NAME, FULL_NAME, BUILD_TIME, RECORD_TIME, SIMPLE_INTRO, CREATED_TIME, 
+    UPDATED_TIME, IS_DELETE, BACK_COLUMN1, BACK_COLUMN2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from COMPANY_INFO
+    where COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from COMPANY_INFO
+    where COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bohai.fofsystem.domain.CompanyInfo" >
+    insert into COMPANY_INFO (COMPANY_ID, SIMPLE_NAME, FULL_NAME, 
+      BUILD_TIME, RECORD_TIME, SIMPLE_INTRO, 
+      CREATED_TIME, UPDATED_TIME, IS_DELETE, 
+      BACK_COLUMN1, BACK_COLUMN2)
+    values (#{companyId,jdbcType=VARCHAR}, #{simpleName,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR}, 
+      #{buildTime,jdbcType=VARCHAR}, #{recordTime,jdbcType=VARCHAR}, #{simpleIntro,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=VARCHAR}, 
+      #{backColumn1,jdbcType=VARCHAR}, #{backColumn2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bohai.fofsystem.domain.CompanyInfo" >
+    insert into COMPANY_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="companyId != null" >
+        COMPANY_ID,
+      </if>
+      <if test="simpleName != null" >
+        SIMPLE_NAME,
+      </if>
+      <if test="fullName != null" >
+        FULL_NAME,
+      </if>
+      <if test="buildTime != null" >
+        BUILD_TIME,
+      </if>
+      <if test="recordTime != null" >
+        RECORD_TIME,
+      </if>
+      <if test="simpleIntro != null" >
+        SIMPLE_INTRO,
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME,
+      </if>
+      <if test="updatedTime != null" >
+        UPDATED_TIME,
+      </if>
+      <if test="isDelete != null" >
+        IS_DELETE,
+      </if>
+      <if test="backColumn1 != null" >
+        BACK_COLUMN1,
+      </if>
+      <if test="backColumn2 != null" >
+        BACK_COLUMN2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleName != null" >
+        #{simpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null" >
+        #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="buildTime != null" >
+        #{buildTime,jdbcType=VARCHAR},
+      </if>
+      <if test="recordTime != null" >
+        #{recordTime,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleIntro != null" >
+        #{simpleIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null" >
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="backColumn1 != null" >
+        #{backColumn1,jdbcType=VARCHAR},
+      </if>
+      <if test="backColumn2 != null" >
+        #{backColumn2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bohai.fofsystem.domain.CompanyInfo" >
+    update COMPANY_INFO
+    <set >
+      <if test="simpleName != null" >
+        SIMPLE_NAME = #{simpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null" >
+        FULL_NAME = #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="buildTime != null" >
+        BUILD_TIME = #{buildTime,jdbcType=VARCHAR},
+      </if>
+      <if test="recordTime != null" >
+        RECORD_TIME = #{recordTime,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleIntro != null" >
+        SIMPLE_INTRO = #{simpleIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null" >
+        UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        IS_DELETE = #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="backColumn1 != null" >
+        BACK_COLUMN1 = #{backColumn1,jdbcType=VARCHAR},
+      </if>
+      <if test="backColumn2 != null" >
+        BACK_COLUMN2 = #{backColumn2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bohai.fofsystem.domain.CompanyInfo" >
+    update COMPANY_INFO
+    set SIMPLE_NAME = #{simpleName,jdbcType=VARCHAR},
+      FULL_NAME = #{fullName,jdbcType=VARCHAR},
+      BUILD_TIME = #{buildTime,jdbcType=VARCHAR},
+      RECORD_TIME = #{recordTime,jdbcType=VARCHAR},
+      SIMPLE_INTRO = #{simpleIntro,jdbcType=VARCHAR},
+      CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
+      UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+      IS_DELETE = #{isDelete,jdbcType=VARCHAR},
+      BACK_COLUMN1 = #{backColumn1,jdbcType=VARCHAR},
+      BACK_COLUMN2 = #{backColumn2,jdbcType=VARCHAR}
+    where COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+  </update>
+</mapper>
