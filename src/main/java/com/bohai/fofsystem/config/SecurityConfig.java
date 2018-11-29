@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/home").authenticated()
                 .anyRequest().permitAll();*/
 
-            http
+            http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/css/**","/js/**","/images/**").permitAll()   //静态资源不拦截
                 .anyRequest().authenticated()

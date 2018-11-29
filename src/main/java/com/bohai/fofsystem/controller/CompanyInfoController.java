@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class CompanyInfoController {
     CompanyInfoService companyInfoService;
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public ReturnBody<Integer> addCompany(@RequestBody CompanyInfo companyInfo){
+    public ReturnBody<Integer> addCompany(@RequestBody @Valid CompanyInfo companyInfo){
        ReturnBody<Integer> returnBody=new ReturnBody<>();
        int result=companyInfoService.addCompany(companyInfo);
        returnBody.setData(result);
@@ -30,7 +31,7 @@ public class CompanyInfoController {
     }
 
     @PostMapping("/modify")
-    public ReturnBody<Integer> modifyCompany(@RequestBody CompanyInfo companyInfo) throws FofException{
+    public ReturnBody<Integer> modifyCompany(@RequestBody @Valid CompanyInfo companyInfo) throws FofException{
         if (StringUtils.isEmpty(companyInfo.getCompanyId())){
             throw new FofException(ErrorConstant.ID_NOT_EXISTS_ERROR);
         }
