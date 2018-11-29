@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+		PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+		"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<!--该文件在后续版本中不要提交-->
+	<!-- classPathEntry:数据库的JDBC驱动的jar包地址,请用自己本地的替换 -->
+	<classPathEntry
+		location="C:\Users\cxy\.m2\repository\com\oracle\ojdbc6\11.2.0\ojdbc6-11.2.0.jar" />
+
+
+
+	<context id="MysqlTables" targetRuntime="MyBatis3">
+
+		<commentGenerator>
+			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+			<property name="suppressAllComments" value="true" />
+			<!-- 不希望生成的注释中包含时间戳 -->
+			<property name="suppressDate" value="true" />
+			<!-- 是否 自动为每一个生成的类创建一个构造方法 -->
+			<property name="constructorBased" value="false" />
+	
+		</commentGenerator>
+		
+		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+			connectionURL="jdbc:oracle:thin:@47.100.12.188:1521:xe" password="YOUHUI"
+			userId="YOUHUI" />
+
+		<!-- 生成model模型 -->
+		<javaModelGenerator targetPackage="com.bohia.fofsystem.domain"
+			targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!--对应的xml mapper文件 -->
+		<sqlMapGenerator targetPackage="mapper"
+			targetProject="src/main/resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- 对应的dao接口 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.bohia.fofsystem.dao" targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+
+
+		<table schema="" tableName="COUPON" domainObjectName="Coupon"
+			enableSelectByExample="false" enableDeleteByExample="false"
+			enableCountByExample="false" enableUpdateByExample="false"
+			selectByExampleQueryId="false">
+		</table>
+		
+	</context>
+
+</generatorConfiguration>
