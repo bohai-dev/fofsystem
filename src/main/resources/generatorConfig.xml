@@ -23,11 +23,11 @@
 		</commentGenerator>
 		
 		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
-			connectionURL="jdbc:oracle:thin:@47.100.12.188:1521:xe" password="YOUHUI"
-			userId="YOUHUI" />
+			connectionURL="jdbc:oracle:thin:@192.168.16.102:1521:xe" password="fof"
+			userId="fof" />
 
 		<!-- 生成model模型 -->
-		<javaModelGenerator targetPackage="com.bohia.fofsystem.domain"
+		<javaModelGenerator targetPackage="com.bohai.fofsystem.domain"
 			targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
@@ -41,13 +41,13 @@
 
 		<!-- 对应的dao接口 -->
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="com.bohia.fofsystem.dao" targetProject="src/main/java">
+			targetPackage="com.bohai.fofsystem.dao" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
 
 
-		<table schema="" tableName="COUPON" domainObjectName="Coupon"
+		<table schema="" tableName="COMPANY_INFO" domainObjectName="CompanyInfo"
 			enableSelectByExample="false" enableDeleteByExample="false"
 			enableCountByExample="false" enableUpdateByExample="false"
 			selectByExampleQueryId="false">

@@ -2,6 +2,8 @@ package com.bohai.fofsystem.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -14,14 +16,20 @@ public class ViewController {
      *
      * @return 登录页
      */
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public String login()
     {
         return "login";
 
     }
+    @GetMapping("/")
+    public String index()
+    {
+        return "login";
 
-    @RequestMapping("/home")
+    }
+
+    @GetMapping("/home")
     public String home(){
         return "home";
     }
@@ -31,7 +39,7 @@ public class ViewController {
      * @param model
      * @return
      */
-    @RequestMapping("/loginError")
+    @GetMapping("/loginError")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
         return "login";
