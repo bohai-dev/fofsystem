@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="commons :: header(~{::title},~{::script},~{::style})">
+    <title>管理人评分</title>
+    <style type="text/css">
+        .sidebar {
+            position: fixed;
+            top: 51px;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            display: block;
+            padding: 20px;
+            overflow-x: hidden;
+            overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+            background-color: #f5f5f5;
+            border-right: 1px solid #eee;
+          }
+    </style>
+    <script type="text/javascript">
+        window.onload = function(){
+	        toastr.options.positionClass = 'toast-bottom-left';
+	        $('#table').bootstrapTable({
+	            columns: [{
+	                field: 'id',
+	                title: '录入人'
+	            }, {
+	                field: 'name',
+	                title: '录入时间'
+	            }, {
+	                field: 'price',
+	                title: '公司编号'
+	            }, {
+                    field: 'id',
+                    title: '尽调编号'
+                }, {
+                    field: 'name',
+                    title: '资本实力'
+                }, {
+                    field: 'price',
+                    title: '产品发行情况'
+                }, {
+                    field: 'id',
+                    title: '管理规模'
+                }, {
+                    field: 'name',
+                    title: '投资安排'
+                }, {
+                    field: 'price',
+                    title: '管理团队状况'
+                }, {
+                    field: 'name',
+                    title: '合规风控体系 '
+                }, {
+                    field: 'price',
+                    title: '产品收益'
+                }, {
+                    field: 'id',
+                    title: '业内知名度'
+                }, {
+                    field: 'name',
+                    title: '产品推广性'
+                }, {
+                    field: 'price',
+                    title: '过往合作情况'
+                }, {
+                    field: 'price',
+                    title: '合计评分'
+                }],
+                data: [],
+                pagination: true,
+                url: "company/selectall",
+                toolbar: "#toolbar"
+	        });
+	        
+	        
+        }
+    </script>
+</head>
+<body>
+        <div th:include="commons :: navbar"></div>
+        <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <div th:include="commons :: leftnavbar"></div>
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            
+            
+                <div class="row placeholders">
+            
+                        <!-- 查询条件表单 -->
+                      <form id="queryForm" method="post" action="exportCustomer" enctype="application/json;charset=UTF-8" class="form-horizontal" style="margin-top: 30px">
+                          <div class="form-group">
+                                
+                                <label class="col-sm-2 col-md-1 control-label">公司编号</label>
+                                <div class="col-sm-10 col-md-2">
+                                    <input type="text" class="form-control">
+                                </div>
+                          
+                                <label class="col-sm-2 col-md-1 control-label">尽调编号</label>
+                                <div class="col-sm-10 col-md-2">
+                                  <input type="text" class="form-control" >
+                                </div>
+                            
+                                <label class="col-sm-2 col-md-1 control-label">录入人</label>
+                                <div class="col-sm-10 col-md-2">
+                                  <input type="text" class="form-control" >
+                                </div>
+                                
+                          </div>
+                          
+                          <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10 col-md-2 col-md-offset-4 ">
+                              <input class="btn btn-default col-xs-7" type="button" value="查询" onclick="queryCrmCustomer()">
+                            </div>
+                          </div>
+                      </form>
+                      <!-- 查询条件表单结束 -->
+                </div>
+                
+                <div class="table-responsive">
+		            <div id="toolbar" class="btn-group">
+		                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addModal" title="新增记录">
+		                    <i class="glyphicon glyphicon-plus">新增记录</i>
+		                </button>
+		            </div>
+	                <table id="table"></table>
+	            </div>
+	            
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">新建客户信息</h4>
+          </div>
+          <div class="modal-body">
+              <form id="addForm" class="form-horizontal" role="form">
+                  
+                  <div class="form-group">
+                    <label for="deptName" class="col-sm-3 control-label">营业部名称</label>
+                    <div class="col-sm-8">
+                      <input type="hidden" class="form-control" id="deptCode" placeholder="" readOnly>
+                      <input type="text" class="form-control" id="deptName" placeholder="" readOnly>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="investorNo" class="col-sm-3 control-label">投资者编号</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="investorNo" placeholder="">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="investorName" class="col-sm-3 control-label">投资者姓名</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="investorName" placeholder="">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="belongType" class="col-sm-3 control-label">归属类型</label>
+                    <div class="col-sm-8">
+                      <select class="selectpicker form-control" id="belongType" data-live-Search="true">
+                          <option value="0">营业部</option>
+                          <option value="1">营销人员</option>
+                          <option value="2">居间人</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="belongTo" class="col-sm-3 control-label">归属名称</label>
+                    <div class="col-sm-8">
+                      <select class="selectpicker form-control" id="belongTo" data-live-Search="true">
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <hr>
+                  
+                  <div class="form-group">
+                    <label for="certType" class="col-sm-3 control-label">证件类型</label>
+                    <div class="col-sm-8">
+                      <select class="selectpicker form-control" id="certType" data-live-Search="true">
+                          <option value="0">身份证</option>
+                          <option value="1">营业执照</option>
+                          <option value="2">组织机构代码</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="certNo" class="col-sm-3 control-label">证件号码</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="certNo" placeholder="">
+                    </div>
+                  </div>
+                  
+                  
+                  <div class="form-group">
+                    <label for="openDate" class="col-sm-3 control-label">开户日期</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="openDate" placeholder="">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="cancelDate" class="col-sm-3 control-label">销户日期</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="cancelDate" placeholder="">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="effectDate" class="col-sm-3 control-label">生效日期</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="effectDate" placeholder="">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="expireDate" class="col-sm-3 control-label">失效日期</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="expireDate" placeholder="">
+                    </div>
+                  </div>
+                  
+                  <hr>
+                  
+                  <div class="form-group">
+                    <label for="contractNo" class="col-sm-3 control-label">合同编号</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="contractNo" placeholder="">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="email" class="col-sm-3 control-label">电子邮箱</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="email" placeholder="">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="address" class="col-sm-3 control-label">地址</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="address" placeholder="">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="mobilePhone" class="col-sm-3 control-label">手机</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="mobilePhone" placeholder="">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="remark" class="col-sm-3 control-label">备注</label>
+                    <div class="col-sm-8">
+                      <textarea class="form-control" rows="3" id="remark"></textarea>
+                    </div>
+                  </div>
+                </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" onclick="saveCrmCustomer()">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</body>
+</html>
