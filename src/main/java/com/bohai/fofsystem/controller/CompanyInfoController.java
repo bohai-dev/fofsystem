@@ -21,7 +21,7 @@ public class CompanyInfoController {
     @Autowired
     CompanyInfoService companyInfoService;
 
-    @PostMapping("/add")
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
     public ReturnBody<Integer> addCompany(@RequestBody CompanyInfo companyInfo){
        ReturnBody<Integer> returnBody=new ReturnBody<>();
        int result=companyInfoService.addCompany(companyInfo);

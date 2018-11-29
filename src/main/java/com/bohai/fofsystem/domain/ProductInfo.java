@@ -3,60 +3,63 @@ package com.bohai.fofsystem.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class ProductInfo {
     private String productId;
-
+    //公司编号
+    @NotBlank(message = "companyId不能为空")
     private String companyId;
 
+    //产品名称
     @NotBlank(message = "产品名称不能为空")
     private String fullName;
-
+    //产品简称
     private String simpleName;
-
+    //协会备案编号
     private String recordNo;
-
+    //协会备案日期
     private String recordDate;
-
+    //产品成立日期
     private String buildTime;
-
+    //产品结束日期
     private String finishTime;
-
+    //投资策略分类
     private String strategyType;
-
-    private Short survivalScale;
-
+    //存续规模
+    private BigDecimal survivalScale;
+    //状态
     private String productStatus;
-
+    //结构形式
     private String structureType;
-
+    //开放日
     private String openDate;
-
+    //封闭期
     private String closeDate;
-
+    //投资经理
     private String investmentManager;
-
+    //投资顾问
     private String investmentAdviser;
-
+    //发行机构
     private String publishUnit;
-
+    //托管机构
     private String hostingUnit;
-
+    //证券经纪
     private String financialIntendant;
-
+    //行政服务机构
     private String serviceUnit;
-
-    private Short adminRate;
-
-    private Short hostingRate;
-
-    private Short buyRate;
-
-    private Short ransomRate;
-
-    private Short achievement;
-
+    //管理费率
+    private BigDecimal adminRate;
+    //托管费率
+    private BigDecimal hostingRate;
+    //认购费率
+    private BigDecimal buyRate;
+    //赎回费率
+    private BigDecimal ransomRate;
+    //业绩报酬
+    private BigDecimal achievement;
+    //净值披露频率
     private String netWotthRate;
 
     private String backColumn1;
@@ -141,11 +144,11 @@ public class ProductInfo {
         this.strategyType = strategyType == null ? null : strategyType.trim();
     }
 
-    public Short getSurvivalScale() {
+    public BigDecimal getSurvivalScale() {
         return survivalScale;
     }
 
-    public void setSurvivalScale(Short survivalScale) {
+    public void setSurvivalScale(BigDecimal survivalScale) {
         this.survivalScale = survivalScale;
     }
 
@@ -229,43 +232,43 @@ public class ProductInfo {
         this.serviceUnit = serviceUnit == null ? null : serviceUnit.trim();
     }
 
-    public Short getAdminRate() {
+    public BigDecimal getAdminRate() {
         return adminRate;
     }
 
-    public void setAdminRate(Short adminRate) {
+    public void setAdminRate(BigDecimal adminRate) {
         this.adminRate = adminRate;
     }
 
-    public Short getHostingRate() {
+    public BigDecimal getHostingRate() {
         return hostingRate;
     }
 
-    public void setHostingRate(Short hostingRate) {
+    public void setHostingRate(BigDecimal hostingRate) {
         this.hostingRate = hostingRate;
     }
 
-    public Short getBuyRate() {
+    public BigDecimal getBuyRate() {
         return buyRate;
     }
 
-    public void setBuyRate(Short buyRate) {
+    public void setBuyRate(BigDecimal buyRate) {
         this.buyRate = buyRate;
     }
 
-    public Short getRansomRate() {
+    public BigDecimal getRansomRate() {
         return ransomRate;
     }
 
-    public void setRansomRate(Short ransomRate) {
+    public void setRansomRate(BigDecimal ransomRate) {
         this.ransomRate = ransomRate;
     }
 
-    public Short getAchievement() {
+    public BigDecimal getAchievement() {
         return achievement;
     }
 
-    public void setAchievement(Short achievement) {
+    public void setAchievement(BigDecimal achievement) {
         this.achievement = achievement;
     }
 
@@ -315,5 +318,42 @@ public class ProductInfo {
 
     public void setIsDelete(String isDelete) {
         this.isDelete = isDelete == null ? null : isDelete.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "ProductInfo{" +
+                "productId='" + productId + '\'' +
+                ", companyId='" + companyId + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", simpleName='" + simpleName + '\'' +
+                ", recordNo='" + recordNo + '\'' +
+                ", recordDate='" + recordDate + '\'' +
+                ", buildTime='" + buildTime + '\'' +
+                ", finishTime='" + finishTime + '\'' +
+                ", strategyType='" + strategyType + '\'' +
+                ", survivalScale=" + survivalScale +
+                ", productStatus='" + productStatus + '\'' +
+                ", structureType='" + structureType + '\'' +
+                ", openDate='" + openDate + '\'' +
+                ", closeDate='" + closeDate + '\'' +
+                ", investmentManager='" + investmentManager + '\'' +
+                ", investmentAdviser='" + investmentAdviser + '\'' +
+                ", publishUnit='" + publishUnit + '\'' +
+                ", hostingUnit='" + hostingUnit + '\'' +
+                ", financialIntendant='" + financialIntendant + '\'' +
+                ", serviceUnit='" + serviceUnit + '\'' +
+                ", adminRate=" + adminRate +
+                ", hostingRate=" + hostingRate +
+                ", buyRate=" + buyRate +
+                ", ransomRate=" + ransomRate +
+                ", achievement=" + achievement +
+                ", netWotthRate='" + netWotthRate + '\'' +
+                ", backColumn1='" + backColumn1 + '\'' +
+                ", backColumn2='" + backColumn2 + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", isDelete='" + isDelete + '\'' +
+                '}';
     }
 }
