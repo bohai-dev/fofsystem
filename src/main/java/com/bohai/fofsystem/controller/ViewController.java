@@ -33,6 +33,16 @@ public class ViewController {
     public String home(){
         return "home";
     }
+    
+    @RequestMapping("/product")
+    public String product(){
+        return "product";
+    }
+    
+    @RequestMapping("/adminScore")
+    public String adminScore(){
+        return "adminScore";
+    }
 
     /**
      * 登录错误，重新返回登录页
