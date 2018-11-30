@@ -47,7 +47,7 @@
 
 
 
-		<table schema="" tableName="COMPANY_INFO" domainObjectName="CompanyInfo"
+		<table schema="" tableName="COMPANY_SCORE" domainObjectName="CompanyScore"
 			enableSelectByExample="false" enableDeleteByExample="false"
 			enableCountByExample="false" enableUpdateByExample="false"
 			selectByExampleQueryId="false">

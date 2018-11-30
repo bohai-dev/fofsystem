@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bohai.fofsystem.dao.CompanyScoreMapper" >
+  <resultMap id="BaseResultMap" type="com.bohai.fofsystem.domain.CompanyScore" >
+    <id column="SCORE_ID" property="scoreId" jdbcType="VARCHAR" />
+    <result column="ENTRY_PERSON" property="entryPerson" jdbcType="VARCHAR" />
+    <result column="ENTRY_TIME" property="entryTime" jdbcType="TIMESTAMP" />
+    <result column="COMPANY_ID" property="companyId" jdbcType="VARCHAR" />
+    <result column="JD_NO" property="jdNo" jdbcType="VARCHAR" />
+    <result column="CAPITAL" property="capital" jdbcType="DECIMAL" />
+    <result column="PUBLISH_STATE" property="publishState" jdbcType="DECIMAL" />
+    <result column="ADMIN_SCALE" property="adminScale" jdbcType="DECIMAL" />
+    <result column="INVESTMENT" property="investment" jdbcType="DECIMAL" />
+    <result column="TEAM_STATE" property="teamState" jdbcType="DECIMAL" />
+    <result column="RISK_STATE" property="riskState" jdbcType="DECIMAL" />
+    <result column="PRODUCT_PROFIT" property="productProfit" jdbcType="DECIMAL" />
+    <result column="REPUTATION" property="reputation" jdbcType="DECIMAL" />
+    <result column="SPREAD_STATE" property="spreadState" jdbcType="DECIMAL" />
+    <result column="COOPERATION" property="cooperation" jdbcType="DECIMAL" />
+    <result column="TOTAL_SCORE" property="totalScore" jdbcType="DECIMAL" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="BACK_COLUMN1" property="backColumn1" jdbcType="VARCHAR" />
+    <result column="BACK_COLUMN2" property="backColumn2" jdbcType="VARCHAR" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SCORE_ID, ENTRY_PERSON, ENTRY_TIME, COMPANY_ID, JD_NO, CAPITAL, PUBLISH_STATE, ADMIN_SCALE, 
+    INVESTMENT, TEAM_STATE, RISK_STATE, PRODUCT_PROFIT, REPUTATION, SPREAD_STATE, COOPERATION, 
+    TOTAL_SCORE, UPDATE_TIME, BACK_COLUMN1, BACK_COLUMN2, IS_DELETE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from COMPANY_SCORE
+    where SCORE_ID = #{scoreId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from COMPANY_SCORE
+    where SCORE_ID = #{scoreId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bohai.fofsystem.domain.CompanyScore" >
+    insert into COMPANY_SCORE (SCORE_ID, ENTRY_PERSON, ENTRY_TIME, 
+      COMPANY_ID, JD_NO, CAPITAL, 
+      PUBLISH_STATE, ADMIN_SCALE, INVESTMENT, 
+      TEAM_STATE, RISK_STATE, PRODUCT_PROFIT, 
+      REPUTATION, SPREAD_STATE, COOPERATION, 
+      TOTAL_SCORE, UPDATE_TIME, BACK_COLUMN1, 
+      BACK_COLUMN2, IS_DELETE)
+    values (#{scoreId,jdbcType=VARCHAR}, #{entryPerson,jdbcType=VARCHAR}, #{entryTime,jdbcType=TIMESTAMP}, 
+      #{companyId,jdbcType=VARCHAR}, #{jdNo,jdbcType=VARCHAR}, #{capital,jdbcType=DECIMAL}, 
+      #{publishState,jdbcType=DECIMAL}, #{adminScale,jdbcType=DECIMAL}, #{investment,jdbcType=DECIMAL}, 
+      #{teamState,jdbcType=DECIMAL}, #{riskState,jdbcType=DECIMAL}, #{productProfit,jdbcType=DECIMAL}, 
+      #{reputation,jdbcType=DECIMAL}, #{spreadState,jdbcType=DECIMAL}, #{cooperation,jdbcType=DECIMAL}, 
+      #{totalScore,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP}, #{backColumn1,jdbcType=VARCHAR}, 
+      #{backColumn2,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bohai.fofsystem.domain.CompanyScore" >
+    insert into COMPANY_SCORE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scoreId != null" >
+        SCORE_ID,
+      </if>
+      <if test="entryPerson != null" >
+        ENTRY_PERSON,
+      </if>
+      <if test="entryTime != null" >
+        ENTRY_TIME,
+      </if>
+      <if test="companyId != null" >
+        COMPANY_ID,
+      </if>
+      <if test="jdNo != null" >
+        JD_NO,
+      </if>
+      <if test="capital != null" >
+        CAPITAL,
+      </if>
+      <if test="publishState != null" >
+        PUBLISH_STATE,
+      </if>
+      <if test="adminScale != null" >
+        ADMIN_SCALE,
+      </if>
+      <if test="investment != null" >
+        INVESTMENT,
+      </if>
+      <if test="teamState != null" >
+        TEAM_STATE,
+      </if>
+      <if test="riskState != null" >
+        RISK_STATE,
+      </if>
+      <if test="productProfit != null" >
+        PRODUCT_PROFIT,
+      </if>
+      <if test="reputation != null" >
+        REPUTATION,
+      </if>
+      <if test="spreadState != null" >
+        SPREAD_STATE,
+      </if>
+      <if test="cooperation != null" >
+        COOPERATION,
+      </if>
+      <if test="totalScore != null" >
+        TOTAL_SCORE,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="backColumn1 != null" >
+        BACK_COLUMN1,
+      </if>
+      <if test="backColumn2 != null" >
+        BACK_COLUMN2,
+      </if>
+      <if test="isDelete != null" >
+        IS_DELETE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scoreId != null" >
+        #{scoreId,jdbcType=VARCHAR},
+      </if>
+      <if test="entryPerson != null" >
+        #{entryPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="entryTime != null" >
+        #{entryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="jdNo != null" >
+        #{jdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="capital != null" >
+        #{capital,jdbcType=DECIMAL},
+      </if>
+      <if test="publishState != null" >
+        #{publishState,jdbcType=DECIMAL},
+      </if>
+      <if test="adminScale != null" >
+        #{adminScale,jdbcType=DECIMAL},
+      </if>
+      <if test="investment != null" >
+        #{investment,jdbcType=DECIMAL},
+      </if>
+      <if test="teamState != null" >
+        #{teamState,jdbcType=DECIMAL},
+      </if>
+      <if test="riskState != null" >
+        #{riskState,jdbcType=DECIMAL},
+      </if>
+      <if test="productProfit != null" >
+        #{productProfit,jdbcType=DECIMAL},
+      </if>
+      <if test="reputation != null" >
+        #{reputation,jdbcType=DECIMAL},
+      </if>
+      <if test="spreadState != null" >
+        #{spreadState,jdbcType=DECIMAL},
+      </if>
+      <if test="cooperation != null" >
+        #{cooperation,jdbcType=DECIMAL},
+      </if>
+      <if test="totalScore != null" >
+        #{totalScore,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="backColumn1 != null" >
+        #{backColumn1,jdbcType=VARCHAR},
+      </if>
+      <if test="backColumn2 != null" >
+        #{backColumn2,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bohai.fofsystem.domain.CompanyScore" >
+    update COMPANY_SCORE
+    <set >
+      <if test="entryPerson != null" >
+        ENTRY_PERSON = #{entryPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="entryTime != null" >
+        ENTRY_TIME = #{entryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="companyId != null" >
+        COMPANY_ID = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="jdNo != null" >
+        JD_NO = #{jdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="capital != null" >
+        CAPITAL = #{capital,jdbcType=DECIMAL},
+      </if>
+      <if test="publishState != null" >
+        PUBLISH_STATE = #{publishState,jdbcType=DECIMAL},
+      </if>
+      <if test="adminScale != null" >
+        ADMIN_SCALE = #{adminScale,jdbcType=DECIMAL},
+      </if>
+      <if test="investment != null" >
+        INVESTMENT = #{investment,jdbcType=DECIMAL},
+      </if>
+      <if test="teamState != null" >
+        TEAM_STATE = #{teamState,jdbcType=DECIMAL},
+      </if>
+      <if test="riskState != null" >
+        RISK_STATE = #{riskState,jdbcType=DECIMAL},
+      </if>
+      <if test="productProfit != null" >
+        PRODUCT_PROFIT = #{productProfit,jdbcType=DECIMAL},
+      </if>
+      <if test="reputation != null" >
+        REPUTATION = #{reputation,jdbcType=DECIMAL},
+      </if>
+      <if test="spreadState != null" >
+        SPREAD_STATE = #{spreadState,jdbcType=DECIMAL},
+      </if>
+      <if test="cooperation != null" >
+        COOPERATION = #{cooperation,jdbcType=DECIMAL},
+      </if>
+      <if test="totalScore != null" >
+        TOTAL_SCORE = #{totalScore,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="backColumn1 != null" >
+        BACK_COLUMN1 = #{backColumn1,jdbcType=VARCHAR},
+      </if>
+      <if test="backColumn2 != null" >
+        BACK_COLUMN2 = #{backColumn2,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        IS_DELETE = #{isDelete,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SCORE_ID = #{scoreId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bohai.fofsystem.domain.CompanyScore" >
+    update COMPANY_SCORE
+    set ENTRY_PERSON = #{entryPerson,jdbcType=VARCHAR},
+      ENTRY_TIME = #{entryTime,jdbcType=TIMESTAMP},
+      COMPANY_ID = #{companyId,jdbcType=VARCHAR},
+      JD_NO = #{jdNo,jdbcType=VARCHAR},
+      CAPITAL = #{capital,jdbcType=DECIMAL},
+      PUBLISH_STATE = #{publishState,jdbcType=DECIMAL},
+      ADMIN_SCALE = #{adminScale,jdbcType=DECIMAL},
+      INVESTMENT = #{investment,jdbcType=DECIMAL},
+      TEAM_STATE = #{teamState,jdbcType=DECIMAL},
+      RISK_STATE = #{riskState,jdbcType=DECIMAL},
+      PRODUCT_PROFIT = #{productProfit,jdbcType=DECIMAL},
+      REPUTATION = #{reputation,jdbcType=DECIMAL},
+      SPREAD_STATE = #{spreadState,jdbcType=DECIMAL},
+      COOPERATION = #{cooperation,jdbcType=DECIMAL},
+      TOTAL_SCORE = #{totalScore,jdbcType=DECIMAL},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      BACK_COLUMN1 = #{backColumn1,jdbcType=VARCHAR},
+      BACK_COLUMN2 = #{backColumn2,jdbcType=VARCHAR},
+      IS_DELETE = #{isDelete,jdbcType=VARCHAR}
+    where SCORE_ID = #{scoreId,jdbcType=VARCHAR}
+  </update>
+</mapper>

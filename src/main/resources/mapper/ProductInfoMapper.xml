@@ -35,14 +35,14 @@
     <result column="IS_DELETE" property="isDelete" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    PRODUCT_ID, COMPANY_ID, FULL_NAME, SIMPLE_NAME, RECORD_NO, RECORD_DATE, BUILD_TIME, 
-    FINISH_TIME, STRATEGY_TYPE, SURVIVAL_SCALE, PRODUCT_STATUS, STRUCTURE_TYPE, OPEN_DATE, 
-    CLOSE_DATE, INVESTMENT_MANAGER, INVESTMENT_ADVISER, PUBLISH_UNIT, HOSTING_UNIT, FINANCIAL_INTENDANT, 
-    SERVICE_UNIT, ADMIN_RATE, HOSTING_RATE, BUY_RATE, RANSOM_RATE, ACHIEVEMENT, NET_WOTTH_RATE, 
+    PRODUCT_ID, COMPANY_ID, FULL_NAME, SIMPLE_NAME, RECORD_NO, RECORD_DATE, BUILD_TIME,
+    FINISH_TIME, STRATEGY_TYPE, SURVIVAL_SCALE, PRODUCT_STATUS, STRUCTURE_TYPE, OPEN_DATE,
+    CLOSE_DATE, INVESTMENT_MANAGER, INVESTMENT_ADVISER, PUBLISH_UNIT, HOSTING_UNIT, FINANCIAL_INTENDANT,
+    SERVICE_UNIT, ADMIN_RATE, HOSTING_RATE, BUY_RATE, RANSOM_RATE, ACHIEVEMENT, NET_WOTTH_RATE,
     BACK_COLUMN1, BACK_COLUMN2, CREATE_TIME, UPDATE_TIME, IS_DELETE
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from PRODUCT_INFO
     where PRODUCT_ID = #{productId,jdbcType=VARCHAR}
@@ -52,27 +52,27 @@
     where PRODUCT_ID = #{productId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.bohai.fofsystem.domain.ProductInfo" >
-    insert into PRODUCT_INFO (PRODUCT_ID, COMPANY_ID, FULL_NAME, 
-      SIMPLE_NAME, RECORD_NO, RECORD_DATE, 
-      BUILD_TIME, FINISH_TIME, STRATEGY_TYPE, 
-      SURVIVAL_SCALE, PRODUCT_STATUS, STRUCTURE_TYPE, 
-      OPEN_DATE, CLOSE_DATE, INVESTMENT_MANAGER, 
-      INVESTMENT_ADVISER, PUBLISH_UNIT, HOSTING_UNIT, 
-      FINANCIAL_INTENDANT, SERVICE_UNIT, ADMIN_RATE, 
-      HOSTING_RATE, BUY_RATE, RANSOM_RATE, 
-      ACHIEVEMENT, NET_WOTTH_RATE, BACK_COLUMN1, 
-      BACK_COLUMN2, CREATE_TIME, UPDATE_TIME, 
+    insert into PRODUCT_INFO (PRODUCT_ID, COMPANY_ID, FULL_NAME,
+      SIMPLE_NAME, RECORD_NO, RECORD_DATE,
+      BUILD_TIME, FINISH_TIME, STRATEGY_TYPE,
+      SURVIVAL_SCALE, PRODUCT_STATUS, STRUCTURE_TYPE,
+      OPEN_DATE, CLOSE_DATE, INVESTMENT_MANAGER,
+      INVESTMENT_ADVISER, PUBLISH_UNIT, HOSTING_UNIT,
+      FINANCIAL_INTENDANT, SERVICE_UNIT, ADMIN_RATE,
+      HOSTING_RATE, BUY_RATE, RANSOM_RATE,
+      ACHIEVEMENT, NET_WOTTH_RATE, BACK_COLUMN1,
+      BACK_COLUMN2, CREATE_TIME, UPDATE_TIME,
       IS_DELETE)
-    values (#{productId,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR}, 
-      #{simpleName,jdbcType=VARCHAR}, #{recordNo,jdbcType=VARCHAR}, #{recordDate,jdbcType=VARCHAR}, 
-      #{buildTime,jdbcType=VARCHAR}, #{finishTime,jdbcType=VARCHAR}, #{strategyType,jdbcType=VARCHAR}, 
-      #{survivalScale,jdbcType=DECIMAL}, #{productStatus,jdbcType=VARCHAR}, #{structureType,jdbcType=VARCHAR}, 
-      #{openDate,jdbcType=VARCHAR}, #{closeDate,jdbcType=VARCHAR}, #{investmentManager,jdbcType=VARCHAR}, 
-      #{investmentAdviser,jdbcType=VARCHAR}, #{publishUnit,jdbcType=VARCHAR}, #{hostingUnit,jdbcType=VARCHAR}, 
-      #{financialIntendant,jdbcType=VARCHAR}, #{serviceUnit,jdbcType=VARCHAR}, #{adminRate,jdbcType=DECIMAL}, 
-      #{hostingRate,jdbcType=DECIMAL}, #{buyRate,jdbcType=DECIMAL}, #{ransomRate,jdbcType=DECIMAL}, 
-      #{achievement,jdbcType=DECIMAL}, #{netWotthRate,jdbcType=VARCHAR}, #{backColumn1,jdbcType=VARCHAR}, 
-      #{backColumn2,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+    values (#{productId,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR},
+      #{simpleName,jdbcType=VARCHAR}, #{recordNo,jdbcType=VARCHAR}, #{recordDate,jdbcType=VARCHAR},
+      #{buildTime,jdbcType=VARCHAR}, #{finishTime,jdbcType=VARCHAR}, #{strategyType,jdbcType=VARCHAR},
+      #{survivalScale,jdbcType=DECIMAL}, #{productStatus,jdbcType=VARCHAR}, #{structureType,jdbcType=VARCHAR},
+      #{openDate,jdbcType=VARCHAR}, #{closeDate,jdbcType=VARCHAR}, #{investmentManager,jdbcType=VARCHAR},
+      #{investmentAdviser,jdbcType=VARCHAR}, #{publishUnit,jdbcType=VARCHAR}, #{hostingUnit,jdbcType=VARCHAR},
+      #{financialIntendant,jdbcType=VARCHAR}, #{serviceUnit,jdbcType=VARCHAR}, #{adminRate,jdbcType=DECIMAL},
+      #{hostingRate,jdbcType=DECIMAL}, #{buyRate,jdbcType=DECIMAL}, #{ransomRate,jdbcType=DECIMAL},
+      #{achievement,jdbcType=DECIMAL}, #{netWotthRate,jdbcType=VARCHAR}, #{backColumn1,jdbcType=VARCHAR},
+      #{backColumn2,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
       #{isDelete,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bohai.fofsystem.domain.ProductInfo" >
@@ -399,69 +399,69 @@
     where PRODUCT_ID = #{productId,jdbcType=VARCHAR}
   </update>
   <select id="selectByConditions" resultMap="BaseResultMap" parameterType="com.bohai.fofsystem.domain.ProductInfo">
-      select
-      <include refid="Base_Column_List" />
-      from  PRODUCT_INFO
-      <where>
-          <if test="companyId!=null">
-              COMPANY_ID = # {companyId,jdbcType=VARCHAR}
-          </if>
-          <if test="productId!=null">
-             and PRODUCT_ID = # {productId,jdbcType=VARCHAR}
-          </if>
-          <if test="fullName!=null">
-              and FULL_NAME = # {fullName,jdbcType=VARCHAR}
-          </if>
-          <if test="simpleName!=null">
-              and SIMPLE_NAME = # {simpleName,jdbcType=VARCHAR}
-          </if>
-          <if test="recordNo!=null">
-              and RECORD_NO = # {recordNo,jdbcType=VARCHAR}
-          </if>
-          <if test="buildTime!=null">
-              and BUILD_TIME = # {buildTime,jdbcType=VARCHAR}
-          </if>
-          <if test="finishTime!=null">
-              and FINISH_TIME = # {finishTime,jdbcType=VARCHAR}
-          </if>
-          <if test="strategyType!=null">
-              and STRATEGY_TYPE = # {strategyType,jdbcType=VARCHAR}
-          </if>
-          <if test="survivalScale!=null">
-              and SURVIVAL_SCALE = # {survivalScale,jdbcType=VARCHAR}
-          </if>
-          <if test="productStatus!=null">
-              and PRODUCT_STATUS = # {productStatus,jdbcType=VARCHAR}
-          </if>
-          <if test="openDate!=null">
-              and OPEN_DATE = # {openDate,jdbcType=VARCHAR}
-          </if>
-          <if test="closeDate!=null">
-              and CLOSE_DATE = # {closeDate,jdbcType=VARCHAR}
-          </if>
-          <if test="structureType!=null">
-              and STRUCTURE_TYPE = # {structureType,jdbcType=VARCHAR}
-          </if>
-          <if test="investmentManager!=null">
-              and INVESTMENT_MANAGER = # {investmentManager,jdbcType=VARCHAR}
-          </if>
-          <if test="investmentAdviser!=null">
-              and INVESTMENT_ADVISER = # {investmentAdviser,jdbcType=VARCHAR}
-          </if>
-          <if test="publishUnit!=null">
-              and PUBLISH_UNIT = # {publishUnit,jdbcType=VARCHAR}
-          </if>
-          <if test="hostingUnit!=null">
-              and HOSTING_UNIT = # {hostingUnit,jdbcType=VARCHAR}
-          </if>
-          <if test="financialIntendant !=null">
-              and FINANCIAL_INTENDANT = # {financialIntendant,jdbcType=VARCHAR}
-          </if>
-          <if test="serviceUnit!=null">
-              and SERVICE_UNIT = # {serviceUnit,jdbcType=VARCHAR}
-          </if>
-          and IS_DELETE='0'
-      </where>
-      order by  UPDATE_TIME desc
+    select
+    <include refid="Base_Column_List" />
+    from  PRODUCT_INFO
+    <where>
+      <if test="companyId!=null">
+        COMPANY_ID = # {companyId,jdbcType=VARCHAR}
+      </if>
+      <if test="productId!=null">
+        and PRODUCT_ID = # {productId,jdbcType=VARCHAR}
+      </if>
+      <if test="fullName!=null">
+        and FULL_NAME = # {fullName,jdbcType=VARCHAR}
+      </if>
+      <if test="simpleName!=null">
+        and SIMPLE_NAME = # {simpleName,jdbcType=VARCHAR}
+      </if>
+      <if test="recordNo!=null">
+        and RECORD_NO = # {recordNo,jdbcType=VARCHAR}
+      </if>
+      <if test="buildTime!=null">
+        and BUILD_TIME = # {buildTime,jdbcType=VARCHAR}
+      </if>
+      <if test="finishTime!=null">
+        and FINISH_TIME = # {finishTime,jdbcType=VARCHAR}
+      </if>
+      <if test="strategyType!=null">
+        and STRATEGY_TYPE = # {strategyType,jdbcType=VARCHAR}
+      </if>
+      <if test="survivalScale!=null">
+        and SURVIVAL_SCALE = # {survivalScale,jdbcType=VARCHAR}
+      </if>
+      <if test="productStatus!=null">
+        and PRODUCT_STATUS = # {productStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="openDate!=null">
+        and OPEN_DATE = # {openDate,jdbcType=VARCHAR}
+      </if>
+      <if test="closeDate!=null">
+        and CLOSE_DATE = # {closeDate,jdbcType=VARCHAR}
+      </if>
+      <if test="structureType!=null">
+        and STRUCTURE_TYPE = # {structureType,jdbcType=VARCHAR}
+      </if>
+      <if test="investmentManager!=null">
+        and INVESTMENT_MANAGER = # {investmentManager,jdbcType=VARCHAR}
+      </if>
+      <if test="investmentAdviser!=null">
+        and INVESTMENT_ADVISER = # {investmentAdviser,jdbcType=VARCHAR}
+      </if>
+      <if test="publishUnit!=null">
+        and PUBLISH_UNIT = # {publishUnit,jdbcType=VARCHAR}
+      </if>
+      <if test="hostingUnit!=null">
+        and HOSTING_UNIT = # {hostingUnit,jdbcType=VARCHAR}
+      </if>
+      <if test="financialIntendant !=null">
+        and FINANCIAL_INTENDANT = # {financialIntendant,jdbcType=VARCHAR}
+      </if>
+      <if test="serviceUnit!=null">
+        and SERVICE_UNIT = # {serviceUnit,jdbcType=VARCHAR}
+      </if>
+      and IS_DELETE='0'
+    </where>
+    order by  UPDATE_TIME desc
   </select>
 </mapper>

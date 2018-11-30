@@ -69,7 +69,7 @@ public class ProductInfo {
     private Date createTime;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
-
+    //删除标志
     private String isDelete;
 
     public String getProductId() {

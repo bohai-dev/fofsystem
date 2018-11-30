@@ -15,8 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth)
-            throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
              auth
                 .inMemoryAuthentication()
@@ -41,7 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/home").authenticated()
                 .anyRequest().permitAll();*/
-
 
         http.csrf().disable()
                 .authorizeRequests()
