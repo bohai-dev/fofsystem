@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by cxy on 2018/11/29
@@ -42,5 +43,15 @@ public class ProductInfoService {
 
 
     }
+
+    public List<ProductInfo> selectByConditions(ProductInfo conditionProduct){
+
+        return productInfoMapper.selectByConditions(conditionProduct);
+    }
+
+
+
+
+
 
 }
