@@ -56,4 +56,14 @@ public class CompanyInfoController {
         returnBody.setData(list);
         return returnBody;
     }
+
+    @PostMapping("/selectbyconditions")
+    public ReturnBody<List<CompanyInfo>> selectByConditions(@RequestBody CompanyInfo companyInfo){
+        ReturnBody<List<CompanyInfo>> returnBody=new ReturnBody<>();
+        List<CompanyInfo> list=companyInfoService.selectByConditions(companyInfo);
+        returnBody.setData(list);
+
+        return  returnBody;
+
+    }
 }

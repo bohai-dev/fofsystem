@@ -161,4 +161,29 @@
       BACK_COLUMN2 = #{backColumn2,jdbcType=VARCHAR}
     where COMPANY_ID = #{companyId,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectByConditions" resultMap="BaseResultMap" parameterType="com.bohai.fofsystem.domain.CompanyInfo">
+    select
+    <include refid="Base_Column_List" />
+    from COMPANY_INFO
+    <where>
+      <if test="companyId !=null">
+        COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+      </if>
+      <if test="fullName !=null">
+        and FULL_NAME = #{fullName,jdbcType=VARCHAR}
+      </if>
+      <if test="simpleName !=null">
+        and SIMPLE_NAME = #{simpleName,jdbcType=VARCHAR}
+      </if>
+      <if test="buildTime !=null">
+        and BUILD_TIME = #{buildTime,jdbcType=VARCHAR}
+      </if>
+      <if test="recordTime !=null">
+        and RECORD_TIME = #{recordTime,jdbcType=VARCHAR}
+      </if>
+      and IS_DELETE='0'
+    </where>
+    order by  UPDATED_TIME desc
+  </select>
 </mapper>

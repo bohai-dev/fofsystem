@@ -4,6 +4,8 @@ import com.bohai.fofsystem.domain.ProductInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface ProductInfoMapper {
     int deleteByPrimaryKey(String productId);
@@ -20,4 +22,7 @@ public interface ProductInfoMapper {
 
     @Select(value="select GLOBAL_SEQ.NEXTVAL from dual")
     String generateId();
+
+    List<ProductInfo> selectByConditions(ProductInfo productInfo);
+
 }

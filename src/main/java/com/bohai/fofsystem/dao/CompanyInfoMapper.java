@@ -21,8 +21,10 @@ public interface CompanyInfoMapper {
     int updateByPrimaryKey(CompanyInfo record);
 
     @Select(value="select GLOBAL_SEQ.NEXTVAL from dual")
-    String generateId();
+    int generateId();
 
-    @Select("select * from COMPANY_INFO")
+    @Select("select * from COMPANY_INFO where IS_DELETE='0' ")
     List<CompanyInfo> selectAll();
+
+    List<CompanyInfo> selectByConditions(CompanyInfo companyInfo);
 }

@@ -2,6 +2,7 @@ package com.bohai.fofsystem.service;
 
 import com.bohai.fofsystem.dao.CompanyInfoMapper;
 import com.bohai.fofsystem.domain.CompanyInfo;
+import com.bohai.fofsystem.utils.CommonUtils;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,8 @@ public class CompanyInfoService {
 
 
    public int addCompany(CompanyInfo companyInfo){
-       String companyId=companyInfoMapper.generateId();
+       int generateId=companyInfoMapper.generateId();
+       String companyId=CommonUtils.getShortNo(generateId);
        companyInfo.setCompanyId(companyId);
        companyInfo.setCreatedTime(new Date());
        companyInfo.setCreatedTime(new Date());
@@ -46,6 +48,14 @@ public class CompanyInfoService {
    public List<CompanyInfo> selectAll(){
 
        return  companyInfoMapper.selectAll();
+
+   }
+
+   public List<CompanyInfo> selectByConditions(CompanyInfo companyInfo){
+
+       List<CompanyInfo> list=companyInfoMapper.selectByConditions(companyInfo);
+
+       return  list;
 
    }
 
