@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by cxy on 2018/12/3
@@ -42,6 +43,11 @@ public class ProductScoreService {
 
         return productScoreMapper.updateByPrimaryKeySelective(productScore);
 
+    }
+
+    public List<ProductScore> selectByConditions(ProductScore productScore){
+        List<ProductScore> list=productScoreMapper.selectByConditions(productScore);
+        return list;
     }
 
 

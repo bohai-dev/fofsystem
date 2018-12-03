@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bohai.fofsystem.dao.ProductScoreMapper" >
-  <resultMap id="BaseResultMap" type="com.bohai.fofsystem.domain.ProductScore" >
-    <id column="SCORE_ID" property="scoreId" jdbcType="VARCHAR" />
-    <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR" />
-    <result column="ENTRY_PERSON" property="entryPerson" jdbcType="VARCHAR" />
-    <result column="ENTRY_TIME" property="entryTime" jdbcType="TIMESTAMP" />
-    <result column="COMPANY_ID" property="companyId" jdbcType="VARCHAR" />
-    <result column="JD_NO" property="jdNo" jdbcType="VARCHAR" />
-    <result column="STRATEGY_TYPE" property="strategyType" jdbcType="VARCHAR" />
-    <result column="NET_WORTH_DATE" property="netWorthDate" jdbcType="VARCHAR" />
-    <result column="PRODUCT_BUILD_TIME" property="productBuildTime" jdbcType="VARCHAR" />
-    <result column="NET_WORTH_LATEST" property="netWorthLatest" jdbcType="DECIMAL" />
-    <result column="CUMULATIVE_WORTH" property="cumulativeWorth" jdbcType="DECIMAL" />
-    <result column="YEAR_PROFIT_TATE" property="yearProfitTate" jdbcType="DECIMAL" />
-    <result column="LAGE_REVOKE" property="lageRevoke" jdbcType="DECIMAL" />
-    <result column="XIAPU_TATE" property="xiapuTate" jdbcType="DECIMAL" />
-    <result column="XINXI_RATE" property="xinxiRate" jdbcType="DECIMAL" />
-    <result column="KAMA_RATE" property="kamaRate" jdbcType="DECIMAL" />
-    <result column="SUOTINUO_RATE" property="suotinuoRate" jdbcType="DECIMAL" />
-    <result column="D_RATIO1" property="dRatio1" jdbcType="DECIMAL" />
-    <result column="D_RATIO2" property="dRatio2" jdbcType="DECIMAL" />
-    <result column="TOTAL_SCORE" property="totalScore" jdbcType="DECIMAL" />
-    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="BACKUP_COLUMN1" property="backupColumn1" jdbcType="VARCHAR" />
-    <result column="IS_DELETE" property="isDelete" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.bohai.fofsystem.dao.ProductScoreMapper">
+    <resultMap id="BaseResultMap" type="com.bohai.fofsystem.domain.ProductScore">
+        <id column="SCORE_ID" property="scoreId" jdbcType="VARCHAR"/>
+        <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR"/>
+        <result column="ENTRY_PERSON" property="entryPerson" jdbcType="VARCHAR"/>
+        <result column="ENTRY_TIME" property="entryTime" jdbcType="TIMESTAMP"/>
+        <result column="COMPANY_ID" property="companyId" jdbcType="VARCHAR"/>
+        <result column="JD_NO" property="jdNo" jdbcType="VARCHAR"/>
+        <result column="STRATEGY_TYPE" property="strategyType" jdbcType="VARCHAR"/>
+        <result column="NET_WORTH_DATE" property="netWorthDate" jdbcType="VARCHAR"/>
+        <result column="PRODUCT_BUILD_TIME" property="productBuildTime" jdbcType="VARCHAR"/>
+        <result column="NET_WORTH_LATEST" property="netWorthLatest" jdbcType="DECIMAL"/>
+        <result column="CUMULATIVE_WORTH" property="cumulativeWorth" jdbcType="DECIMAL"/>
+        <result column="YEAR_PROFIT_TATE" property="yearProfitTate" jdbcType="DECIMAL"/>
+        <result column="LAGE_REVOKE" property="lageRevoke" jdbcType="DECIMAL"/>
+        <result column="XIAPU_TATE" property="xiapuTate" jdbcType="DECIMAL"/>
+        <result column="XINXI_RATE" property="xinxiRate" jdbcType="DECIMAL"/>
+        <result column="KAMA_RATE" property="kamaRate" jdbcType="DECIMAL"/>
+        <result column="SUOTINUO_RATE" property="suotinuoRate" jdbcType="DECIMAL"/>
+        <result column="D_RATIO1" property="dRatio1" jdbcType="DECIMAL"/>
+        <result column="D_RATIO2" property="dRatio2" jdbcType="DECIMAL"/>
+        <result column="TOTAL_SCORE" property="totalScore" jdbcType="DECIMAL"/>
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="BACKUP_COLUMN1" property="backupColumn1" jdbcType="VARCHAR"/>
+        <result column="IS_DELETE" property="isDelete" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     SCORE_ID, PRODUCT_ID, ENTRY_PERSON, ENTRY_TIME, COMPANY_ID, JD_NO, STRATEGY_TYPE, 
     NET_WORTH_DATE, PRODUCT_BUILD_TIME, NET_WORTH_LATEST, CUMULATIVE_WORTH, YEAR_PROFIT_TATE, 
     LAGE_REVOKE, XIAPU_TATE, XINXI_RATE, KAMA_RATE, SUOTINUO_RATE, D_RATIO1, D_RATIO2, 
     TOTAL_SCORE, UPDATE_TIME, BACKUP_COLUMN1, IS_DELETE
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from PRODUCT_SCORE
-    where SCORE_ID = #{scoreId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from PRODUCT_SCORE
+        where SCORE_ID = #{scoreId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from PRODUCT_SCORE
     where SCORE_ID = #{scoreId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.bohai.fofsystem.domain.ProductScore" >
+    <insert id="insert" parameterType="com.bohai.fofsystem.domain.ProductScore">
     insert into PRODUCT_SCORE (SCORE_ID, PRODUCT_ID, ENTRY_PERSON, 
       ENTRY_TIME, COMPANY_ID, JD_NO, 
       STRATEGY_TYPE, NET_WORTH_DATE, PRODUCT_BUILD_TIME, 
@@ -60,224 +60,224 @@
       #{dRatio2,jdbcType=DECIMAL}, #{totalScore,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{backupColumn1,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.bohai.fofsystem.domain.ProductScore" >
-    insert into PRODUCT_SCORE
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="scoreId != null" >
-        SCORE_ID,
-      </if>
-      <if test="productId != null" >
-        PRODUCT_ID,
-      </if>
-      <if test="entryPerson != null" >
-        ENTRY_PERSON,
-      </if>
-      <if test="entryTime != null" >
-        ENTRY_TIME,
-      </if>
-      <if test="companyId != null" >
-        COMPANY_ID,
-      </if>
-      <if test="jdNo != null" >
-        JD_NO,
-      </if>
-      <if test="strategyType != null" >
-        STRATEGY_TYPE,
-      </if>
-      <if test="netWorthDate != null" >
-        NET_WORTH_DATE,
-      </if>
-      <if test="productBuildTime != null" >
-        PRODUCT_BUILD_TIME,
-      </if>
-      <if test="netWorthLatest != null" >
-        NET_WORTH_LATEST,
-      </if>
-      <if test="cumulativeWorth != null" >
-        CUMULATIVE_WORTH,
-      </if>
-      <if test="yearProfitTate != null" >
-        YEAR_PROFIT_TATE,
-      </if>
-      <if test="lageRevoke != null" >
-        LAGE_REVOKE,
-      </if>
-      <if test="xiapuTate != null" >
-        XIAPU_TATE,
-      </if>
-      <if test="xinxiRate != null" >
-        XINXI_RATE,
-      </if>
-      <if test="kamaRate != null" >
-        KAMA_RATE,
-      </if>
-      <if test="suotinuoRate != null" >
-        SUOTINUO_RATE,
-      </if>
-      <if test="dRatio1 != null" >
-        D_RATIO1,
-      </if>
-      <if test="dRatio2 != null" >
-        D_RATIO2,
-      </if>
-      <if test="totalScore != null" >
-        TOTAL_SCORE,
-      </if>
-      <if test="updateTime != null" >
-        UPDATE_TIME,
-      </if>
-      <if test="backupColumn1 != null" >
-        BACKUP_COLUMN1,
-      </if>
-      <if test="isDelete != null" >
-        IS_DELETE,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="scoreId != null" >
-        #{scoreId,jdbcType=VARCHAR},
-      </if>
-      <if test="productId != null" >
-        #{productId,jdbcType=VARCHAR},
-      </if>
-      <if test="entryPerson != null" >
-        #{entryPerson,jdbcType=VARCHAR},
-      </if>
-      <if test="entryTime != null" >
-        #{entryTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="companyId != null" >
-        #{companyId,jdbcType=VARCHAR},
-      </if>
-      <if test="jdNo != null" >
-        #{jdNo,jdbcType=VARCHAR},
-      </if>
-      <if test="strategyType != null" >
-        #{strategyType,jdbcType=VARCHAR},
-      </if>
-      <if test="netWorthDate != null" >
-        #{netWorthDate,jdbcType=VARCHAR},
-      </if>
-      <if test="productBuildTime != null" >
-        #{productBuildTime,jdbcType=VARCHAR},
-      </if>
-      <if test="netWorthLatest != null" >
-        #{netWorthLatest,jdbcType=DECIMAL},
-      </if>
-      <if test="cumulativeWorth != null" >
-        #{cumulativeWorth,jdbcType=DECIMAL},
-      </if>
-      <if test="yearProfitTate != null" >
-        #{yearProfitTate,jdbcType=DECIMAL},
-      </if>
-      <if test="lageRevoke != null" >
-        #{lageRevoke,jdbcType=DECIMAL},
-      </if>
-      <if test="xiapuTate != null" >
-        #{xiapuTate,jdbcType=DECIMAL},
-      </if>
-      <if test="xinxiRate != null" >
-        #{xinxiRate,jdbcType=DECIMAL},
-      </if>
-      <if test="kamaRate != null" >
-        #{kamaRate,jdbcType=DECIMAL},
-      </if>
-      <if test="suotinuoRate != null" >
-        #{suotinuoRate,jdbcType=DECIMAL},
-      </if>
-      <if test="dRatio1 != null" >
-        #{dRatio1,jdbcType=DECIMAL},
-      </if>
-      <if test="dRatio2 != null" >
-        #{dRatio2,jdbcType=DECIMAL},
-      </if>
-      <if test="totalScore != null" >
-        #{totalScore,jdbcType=DECIMAL},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="backupColumn1 != null" >
-        #{backupColumn1,jdbcType=VARCHAR},
-      </if>
-      <if test="isDelete != null" >
-        #{isDelete,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bohai.fofsystem.domain.ProductScore" >
-    update PRODUCT_SCORE
-    <set >
-      <if test="productId != null" >
-        PRODUCT_ID = #{productId,jdbcType=VARCHAR},
-      </if>
-      <if test="entryPerson != null" >
-        ENTRY_PERSON = #{entryPerson,jdbcType=VARCHAR},
-      </if>
-      <if test="entryTime != null" >
-        ENTRY_TIME = #{entryTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="companyId != null" >
-        COMPANY_ID = #{companyId,jdbcType=VARCHAR},
-      </if>
-      <if test="jdNo != null" >
-        JD_NO = #{jdNo,jdbcType=VARCHAR},
-      </if>
-      <if test="strategyType != null" >
-        STRATEGY_TYPE = #{strategyType,jdbcType=VARCHAR},
-      </if>
-      <if test="netWorthDate != null" >
-        NET_WORTH_DATE = #{netWorthDate,jdbcType=VARCHAR},
-      </if>
-      <if test="productBuildTime != null" >
-        PRODUCT_BUILD_TIME = #{productBuildTime,jdbcType=VARCHAR},
-      </if>
-      <if test="netWorthLatest != null" >
-        NET_WORTH_LATEST = #{netWorthLatest,jdbcType=DECIMAL},
-      </if>
-      <if test="cumulativeWorth != null" >
-        CUMULATIVE_WORTH = #{cumulativeWorth,jdbcType=DECIMAL},
-      </if>
-      <if test="yearProfitTate != null" >
-        YEAR_PROFIT_TATE = #{yearProfitTate,jdbcType=DECIMAL},
-      </if>
-      <if test="lageRevoke != null" >
-        LAGE_REVOKE = #{lageRevoke,jdbcType=DECIMAL},
-      </if>
-      <if test="xiapuTate != null" >
-        XIAPU_TATE = #{xiapuTate,jdbcType=DECIMAL},
-      </if>
-      <if test="xinxiRate != null" >
-        XINXI_RATE = #{xinxiRate,jdbcType=DECIMAL},
-      </if>
-      <if test="kamaRate != null" >
-        KAMA_RATE = #{kamaRate,jdbcType=DECIMAL},
-      </if>
-      <if test="suotinuoRate != null" >
-        SUOTINUO_RATE = #{suotinuoRate,jdbcType=DECIMAL},
-      </if>
-      <if test="dRatio1 != null" >
-        D_RATIO1 = #{dRatio1,jdbcType=DECIMAL},
-      </if>
-      <if test="dRatio2 != null" >
-        D_RATIO2 = #{dRatio2,jdbcType=DECIMAL},
-      </if>
-      <if test="totalScore != null" >
-        TOTAL_SCORE = #{totalScore,jdbcType=DECIMAL},
-      </if>
-      <if test="updateTime != null" >
-        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="backupColumn1 != null" >
-        BACKUP_COLUMN1 = #{backupColumn1,jdbcType=VARCHAR},
-      </if>
-      <if test="isDelete != null" >
-        IS_DELETE = #{isDelete,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where SCORE_ID = #{scoreId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.bohai.fofsystem.domain.ProductScore" >
+    <insert id="insertSelective" parameterType="com.bohai.fofsystem.domain.ProductScore">
+        insert into PRODUCT_SCORE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="scoreId != null">
+                SCORE_ID,
+            </if>
+            <if test="productId != null">
+                PRODUCT_ID,
+            </if>
+            <if test="entryPerson != null">
+                ENTRY_PERSON,
+            </if>
+            <if test="entryTime != null">
+                ENTRY_TIME,
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID,
+            </if>
+            <if test="jdNo != null">
+                JD_NO,
+            </if>
+            <if test="strategyType != null">
+                STRATEGY_TYPE,
+            </if>
+            <if test="netWorthDate != null">
+                NET_WORTH_DATE,
+            </if>
+            <if test="productBuildTime != null">
+                PRODUCT_BUILD_TIME,
+            </if>
+            <if test="netWorthLatest != null">
+                NET_WORTH_LATEST,
+            </if>
+            <if test="cumulativeWorth != null">
+                CUMULATIVE_WORTH,
+            </if>
+            <if test="yearProfitTate != null">
+                YEAR_PROFIT_TATE,
+            </if>
+            <if test="lageRevoke != null">
+                LAGE_REVOKE,
+            </if>
+            <if test="xiapuTate != null">
+                XIAPU_TATE,
+            </if>
+            <if test="xinxiRate != null">
+                XINXI_RATE,
+            </if>
+            <if test="kamaRate != null">
+                KAMA_RATE,
+            </if>
+            <if test="suotinuoRate != null">
+                SUOTINUO_RATE,
+            </if>
+            <if test="dRatio1 != null">
+                D_RATIO1,
+            </if>
+            <if test="dRatio2 != null">
+                D_RATIO2,
+            </if>
+            <if test="totalScore != null">
+                TOTAL_SCORE,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+            <if test="backupColumn1 != null">
+                BACKUP_COLUMN1,
+            </if>
+            <if test="isDelete != null">
+                IS_DELETE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="scoreId != null">
+                #{scoreId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="entryPerson != null">
+                #{entryPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="entryTime != null">
+                #{entryTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=VARCHAR},
+            </if>
+            <if test="jdNo != null">
+                #{jdNo,jdbcType=VARCHAR},
+            </if>
+            <if test="strategyType != null">
+                #{strategyType,jdbcType=VARCHAR},
+            </if>
+            <if test="netWorthDate != null">
+                #{netWorthDate,jdbcType=VARCHAR},
+            </if>
+            <if test="productBuildTime != null">
+                #{productBuildTime,jdbcType=VARCHAR},
+            </if>
+            <if test="netWorthLatest != null">
+                #{netWorthLatest,jdbcType=DECIMAL},
+            </if>
+            <if test="cumulativeWorth != null">
+                #{cumulativeWorth,jdbcType=DECIMAL},
+            </if>
+            <if test="yearProfitTate != null">
+                #{yearProfitTate,jdbcType=DECIMAL},
+            </if>
+            <if test="lageRevoke != null">
+                #{lageRevoke,jdbcType=DECIMAL},
+            </if>
+            <if test="xiapuTate != null">
+                #{xiapuTate,jdbcType=DECIMAL},
+            </if>
+            <if test="xinxiRate != null">
+                #{xinxiRate,jdbcType=DECIMAL},
+            </if>
+            <if test="kamaRate != null">
+                #{kamaRate,jdbcType=DECIMAL},
+            </if>
+            <if test="suotinuoRate != null">
+                #{suotinuoRate,jdbcType=DECIMAL},
+            </if>
+            <if test="dRatio1 != null">
+                #{dRatio1,jdbcType=DECIMAL},
+            </if>
+            <if test="dRatio2 != null">
+                #{dRatio2,jdbcType=DECIMAL},
+            </if>
+            <if test="totalScore != null">
+                #{totalScore,jdbcType=DECIMAL},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="backupColumn1 != null">
+                #{backupColumn1,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.bohai.fofsystem.domain.ProductScore">
+        update PRODUCT_SCORE
+        <set>
+            <if test="productId != null">
+                PRODUCT_ID = #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="entryPerson != null">
+                ENTRY_PERSON = #{entryPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="entryTime != null">
+                ENTRY_TIME = #{entryTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=VARCHAR},
+            </if>
+            <if test="jdNo != null">
+                JD_NO = #{jdNo,jdbcType=VARCHAR},
+            </if>
+            <if test="strategyType != null">
+                STRATEGY_TYPE = #{strategyType,jdbcType=VARCHAR},
+            </if>
+            <if test="netWorthDate != null">
+                NET_WORTH_DATE = #{netWorthDate,jdbcType=VARCHAR},
+            </if>
+            <if test="productBuildTime != null">
+                PRODUCT_BUILD_TIME = #{productBuildTime,jdbcType=VARCHAR},
+            </if>
+            <if test="netWorthLatest != null">
+                NET_WORTH_LATEST = #{netWorthLatest,jdbcType=DECIMAL},
+            </if>
+            <if test="cumulativeWorth != null">
+                CUMULATIVE_WORTH = #{cumulativeWorth,jdbcType=DECIMAL},
+            </if>
+            <if test="yearProfitTate != null">
+                YEAR_PROFIT_TATE = #{yearProfitTate,jdbcType=DECIMAL},
+            </if>
+            <if test="lageRevoke != null">
+                LAGE_REVOKE = #{lageRevoke,jdbcType=DECIMAL},
+            </if>
+            <if test="xiapuTate != null">
+                XIAPU_TATE = #{xiapuTate,jdbcType=DECIMAL},
+            </if>
+            <if test="xinxiRate != null">
+                XINXI_RATE = #{xinxiRate,jdbcType=DECIMAL},
+            </if>
+            <if test="kamaRate != null">
+                KAMA_RATE = #{kamaRate,jdbcType=DECIMAL},
+            </if>
+            <if test="suotinuoRate != null">
+                SUOTINUO_RATE = #{suotinuoRate,jdbcType=DECIMAL},
+            </if>
+            <if test="dRatio1 != null">
+                D_RATIO1 = #{dRatio1,jdbcType=DECIMAL},
+            </if>
+            <if test="dRatio2 != null">
+                D_RATIO2 = #{dRatio2,jdbcType=DECIMAL},
+            </if>
+            <if test="totalScore != null">
+                TOTAL_SCORE = #{totalScore,jdbcType=DECIMAL},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="backupColumn1 != null">
+                BACKUP_COLUMN1 = #{backupColumn1,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                IS_DELETE = #{isDelete,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where SCORE_ID = #{scoreId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.bohai.fofsystem.domain.ProductScore">
     update PRODUCT_SCORE
     set PRODUCT_ID = #{productId,jdbcType=VARCHAR},
       ENTRY_PERSON = #{entryPerson,jdbcType=VARCHAR},
@@ -303,4 +303,40 @@
       IS_DELETE = #{isDelete,jdbcType=VARCHAR}
     where SCORE_ID = #{scoreId,jdbcType=VARCHAR}
   </update>
+
+    <select id="selectByConditions" resultMap="BaseResultMap" parameterType="com.bohai.fofsystem.domain.ProductScore">
+        select
+        <include refid="Base_Column_List"/>
+        from PRODUCT_SCORE
+        <where>
+
+            <if test="scoreId !=null">
+                SCORE_ID = #{scoreId,jdbcType=VARCHAR}
+            </if>
+            <if test="productId !=null">
+                PRODUCT_ID = #{productId,jdbcType=VARCHAR}
+            </if>
+            <if test="entryPerson !=null">
+                AND ENTRY_PERSON = #{entryPerson,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId !=null">
+                AND COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+            </if>
+            <if test="jdNo !=null">
+                AND JD_NO = #{jdNo,jdbcType=VARCHAR}
+            </if>
+            <if test="strategyType !=null">
+                AND STRATEGY_TYPE = #{strategyType,jdbcType=VARCHAR}
+            </if>
+            <if test="netWorthDate !=null">
+                AND NET_WORTH_DATE = #{netWorthDate,jdbcType=VARCHAR}
+            </if>
+            <if test="productBuildTime !=null">
+                AND PRODUCT_BUILD_TIME = #{productBuildTime,jdbcType=VARCHAR}
+            </if>
+            and IS_DELETE='0'
+        </where>
+        ORDER BY ENTRY_TIME DESC
+
+    </select>
 </mapper>

@@ -4,6 +4,8 @@ import com.bohai.fofsystem.domain.ProductScore;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface ProductScoreMapper {
     int deleteByPrimaryKey(String scoreId);
@@ -20,4 +22,6 @@ public interface ProductScoreMapper {
 
     @Select(value="select GLOBAL_SEQ.NEXTVAL from dual")
     String generateId();
+
+    List<ProductScore> selectByConditions(ProductScore productScore);
 }

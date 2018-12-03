@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created by cxy on 2018/12/3
@@ -54,6 +55,14 @@ public class ProductScoreController {
         int result=productScoreService.logicDelScore(scoreId);
         returnBody.setData(result);
 
+        return returnBody;
+    }
+
+    @PostMapping("/selectbyconditions")
+    public ReturnBody<List<ProductScore>> selectByConditions(@RequestBody ProductScore conProScore){
+        ReturnBody<List<ProductScore>> returnBody=new ReturnBody<>();
+        List<ProductScore> list=productScoreService.selectByConditions(conProScore);
+        returnBody.setData(list);
         return returnBody;
     }
 }
