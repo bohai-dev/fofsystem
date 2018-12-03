@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace="commons :: header(~{::title},~{::script},~{::style})">
-    <title>管理人评分</title>
+    <title>产品评分</title>
     <style type="text/css">
         .sidebar {
             position: fixed;
@@ -101,41 +101,53 @@
                             field: 'companyId',
                             title: '公司编号'
                         }, {
+                            field: 'productId',
+                            title: '产品编号'
+                        },{
                             field: 'jdNo',
                             title: '尽调编号'
                         }, {
                             field: 'capital',
-                            title: '资本实力'
+                            title: '投资策略分类'
                         }, {
                             field: 'publishState',
-                            title: '产品发行情况'
+                            title: '净值日期'
                         }, {
                             field: 'adminScale',
-                            title: '管理规模'
+                            title: '产品成立日期'
                         }, {
                             field: 'investment',
-                            title: '投资安排'
+                            title: '1. 最新单位净值'
                         }, {
                             field: 'teamState',
-                            title: '管理团队状况'
+                            title: '2. 复权累计净值'
                         }, {
                             field: 'riskState',
-                            title: '合规风控体系 '
+                            title: '3. 年化收益率'
                         }, {
                             field: 'productProfit',
-                            title: '产品收益'
+                            title: '4. 最大连续回撤'
                         }, {
                             field: 'reputation',
-                            title: '业内知名度'
+                            title: '5. 夏普比率'
                         }, {
                             field: 'spreadState',
-                            title: '产品推广性'
+                            title: '6. 信息比率'
                         }, {
                             field: 'cooperation',
-                            title: '过往合作情况'
+                            title: '7. 卡马比率'
                         }, {
-                            field: 'totalScore',
-                            title: '合计评分'
+                            field: 'spreadState',
+                            title: '8. 索提诺比率'
+                        }, {
+                            field: 'cooperation',
+                            title: '9. D-Ratio'
+                        }, {
+                            field: 'spreadState',
+                            title: '10. D-Ratio_'
+                        }, {
+                            field: 'cooperation',
+                            title: '11.综合评价'
                         }, {
                             title: '操作',
                             events: operateEvents,

@@ -29,6 +29,11 @@
 	
 	<!-- Latest compiled and minified Locales -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
+
+	<!-- 引入样式 -->
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<!-- 引入组件库 -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 	
 	<script th:replace="${script}"></script>
 	<style th:replace="${style}"></style>
@@ -51,9 +56,9 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="market.html">行情</a></li>
-					<li><a href="instrument.html">合约</a></li>
-					<li><a href="quota.html">指标</a></li>
+					<li><a href="home">管理人信息</a></li>
+					<li><a href="product">产品信息</a></li>
+					<li><a href="adminScore">管理人评分</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#">Link</a></li>
@@ -85,7 +90,7 @@
                     <a href="adminScore">管理人评分表</a>
                 </li>
                 <li>
-                    <a href="#">产品业绩评分表</a>
+                    <a href="productScore">产品业绩评分表</a>
                 </li>
             </ul>
 	</div>
