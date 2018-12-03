@@ -1,5 +1,7 @@
 package com.bohai.fofsystem.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
@@ -10,6 +12,7 @@ public class CompanyScore {
     //录入人
     private String entryPerson;
     //录入时间（创建时间）
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date entryTime;
     //公司编号
     @NotBlank(message = "companyId不能为空")
@@ -38,7 +41,8 @@ public class CompanyScore {
     private Double cooperation;
     //合计评分
     private Double totalScore;
-
+    //更新时间
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     private String backColumn1;

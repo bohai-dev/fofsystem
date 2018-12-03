@@ -184,6 +184,6 @@
       </if>
       and IS_DELETE='0'
     </where>
-    order by  UPDATED_TIME desc
+    order by  CREATED_TIME desc
   </select>
 </mapper>
