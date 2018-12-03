@@ -43,6 +43,11 @@ public class ViewController {
     public String adminScore(){
         return "adminScore";
     }
+    
+    @RequestMapping("/productScore")
+    public String productScore(){
+        return "productScore";
+    }
 
     /**
      * 登录错误，重新返回登录页
