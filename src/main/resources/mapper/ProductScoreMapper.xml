@@ -310,28 +310,28 @@
         from PRODUCT_SCORE
         <where>
 
-            <if test="scoreId !=null">
+            <if test="scoreId !=null and scoreId!='' ">
                 SCORE_ID = #{scoreId,jdbcType=VARCHAR}
             </if>
-            <if test="productId !=null">
+            <if test="productId !=null and productId!='' ">
                 PRODUCT_ID = #{productId,jdbcType=VARCHAR}
             </if>
-            <if test="entryPerson !=null">
+            <if test="entryPerson !=null and entryPerson!='' ">
                 AND ENTRY_PERSON = #{entryPerson,jdbcType=VARCHAR}
             </if>
-            <if test="companyId !=null">
+            <if test="companyId !=null and companyId!='' ">
                 AND COMPANY_ID = #{companyId,jdbcType=VARCHAR}
             </if>
-            <if test="jdNo !=null">
+            <if test="jdNo !=null and jdNo!='' " >
                 AND JD_NO = #{jdNo,jdbcType=VARCHAR}
             </if>
-            <if test="strategyType !=null">
+            <if test="strategyType !=null and strategyType!='' ">
                 AND STRATEGY_TYPE = #{strategyType,jdbcType=VARCHAR}
             </if>
-            <if test="netWorthDate !=null">
+            <if test="netWorthDate !=null and netWorthDate!='' ">
                 AND NET_WORTH_DATE = #{netWorthDate,jdbcType=VARCHAR}
             </if>
-            <if test="productBuildTime !=null">
+            <if test="productBuildTime !=null and productBuildTime!='' ">
                 AND PRODUCT_BUILD_TIME = #{productBuildTime,jdbcType=VARCHAR}
             </if>
             and IS_DELETE='0'

@@ -403,61 +403,61 @@
     <include refid="Base_Column_List" />
     from  PRODUCT_INFO
     <where>
-      <if test="companyId!=null">
+      <if test="companyId!=null and companyId!='' ">
         COMPANY_ID = #{companyId,jdbcType=VARCHAR}
       </if>
-      <if test="productId!=null">
+      <if test="productId!=null and productId!='' ">
         and PRODUCT_ID = #{productId,jdbcType=VARCHAR}
       </if>
-      <if test="fullName!=null">
+      <if test="fullName!=null and fullName!='' ">
         and FULL_NAME = #{fullName,jdbcType=VARCHAR}
       </if>
-      <if test="simpleName!=null">
+      <if test="simpleName!=null and simpleName!='' ">
         and SIMPLE_NAME = #{simpleName,jdbcType=VARCHAR}
       </if>
-      <if test="recordNo!=null">
+      <if test="recordNo!=null and recordNo!='' ">
         and RECORD_NO = #{recordNo,jdbcType=VARCHAR}
       </if>
-      <if test="buildTime!=null">
+      <if test="buildTime!=null and buildTime!='' ">
         and BUILD_TIME = #{buildTime,jdbcType=VARCHAR}
       </if>
-      <if test="finishTime!=null">
+      <if test="finishTime!=null and finishTime!='' ">
         and FINISH_TIME = #{finishTime,jdbcType=VARCHAR}
       </if>
-      <if test="strategyType!=null">
+      <if test="strategyType!=null and strategyType!='' ">
         and STRATEGY_TYPE = #{strategyType,jdbcType=VARCHAR}
       </if>
-      <if test="survivalScale!=null">
+      <if test="survivalScale!=null and survivalScale!='' ">
         and SURVIVAL_SCALE = #{survivalScale,jdbcType=VARCHAR}
       </if>
-      <if test="productStatus!=null">
+      <if test="productStatus!=null and productStatus!='' ">
         and PRODUCT_STATUS = #{productStatus,jdbcType=VARCHAR}
       </if>
-      <if test="openDate!=null">
+      <if test="openDate!=null and openDate!='' ">
         and OPEN_DATE = #{openDate,jdbcType=VARCHAR}
       </if>
-      <if test="closeDate!=null">
+      <if test="closeDate!=null and closeDate!='' ">
         and CLOSE_DATE = #{closeDate,jdbcType=VARCHAR}
       </if>
-      <if test="structureType!=null">
+      <if test="structureType!=null and structureType!='' ">
         and STRUCTURE_TYPE = #{structureType,jdbcType=VARCHAR}
       </if>
-      <if test="investmentManager!=null">
+      <if test="investmentManager!=null and investmentManager!='' ">
         and INVESTMENT_MANAGER = #{investmentManager,jdbcType=VARCHAR}
       </if>
-      <if test="investmentAdviser!=null">
+      <if test="investmentAdviser!=null and investmentAdviser!='' ">
         and INVESTMENT_ADVISER = #{investmentAdviser,jdbcType=VARCHAR}
       </if>
-      <if test="publishUnit!=null">
+      <if test="publishUnit!=null and publishUnit!='' ">
         and PUBLISH_UNIT = #{publishUnit,jdbcType=VARCHAR}
       </if>
-      <if test="hostingUnit!=null">
+      <if test="hostingUnit!=null and hostingUnit!='' ">
         and HOSTING_UNIT = #{hostingUnit,jdbcType=VARCHAR}
       </if>
-      <if test="financialIntendant !=null">
+      <if test="financialIntendant !=null and financialIntendant!='' ">
         and FINANCIAL_INTENDANT = #{financialIntendant,jdbcType=VARCHAR}
       </if>
-      <if test="serviceUnit!=null">
+      <if test="serviceUnit!=null and serviceUnit!='' ">
         and SERVICE_UNIT = #{serviceUnit,jdbcType=VARCHAR}
       </if>
       and IS_DELETE='0'

@@ -167,19 +167,19 @@
     <include refid="Base_Column_List" />
     from COMPANY_INFO
     <where>
-      <if test="companyId !=null">
+      <if test="companyId !=null and companyId!='' ">
         COMPANY_ID = #{companyId,jdbcType=VARCHAR}
       </if>
-      <if test="fullName !=null">
+      <if test="fullName !=null and fullName!='' ">
         and FULL_NAME = #{fullName,jdbcType=VARCHAR}
       </if>
-      <if test="simpleName !=null">
+      <if test="simpleName !=null and simpleName!='' ">
         and SIMPLE_NAME = #{simpleName,jdbcType=VARCHAR}
       </if>
-      <if test="buildTime !=null">
+      <if test="buildTime !=null and buildTime!='' ">
         and BUILD_TIME = #{buildTime,jdbcType=VARCHAR}
       </if>
-      <if test="recordTime !=null">
+      <if test="recordTime !=null and recordTime!='' ">
         and RECORD_TIME = #{recordTime,jdbcType=VARCHAR}
       </if>
       and IS_DELETE='0'

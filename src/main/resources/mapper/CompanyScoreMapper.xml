@@ -271,16 +271,16 @@
   <select id="selectByConditions" resultMap="BaseResultMap" parameterType="com.bohai.fofsystem.domain.CompanyScore">
     select <include refid="Base_Column_List" /> from COMPANY_SCORE
     <where>
-      <if test="scoreId !=null">
+      <if test="scoreId !=null and scoreId!='' ">
         SCORE_ID = #{scoreId,jdbcType=VARCHAR}
       </if>
-      <if test="entryPerson !=null">
+      <if test="entryPerson !=null and entryPerson!='' ">
         AND ENTRY_PERSON = #{entryPerson,jdbcType=VARCHAR}
       </if>
-      <if test="companyId !=null">
+      <if test="companyId !=null and companyId!='' ">
         AND COMPANY_ID = #{companyId,jdbcType=VARCHAR}
       </if>
-      <if test="jdNo !=null">
+      <if test="jdNo !=null and jdNo!='' ">
         AND JD_NO = #{jdNo,jdbcType=VARCHAR}
       </if>
       AND IS_DELETE='0'
