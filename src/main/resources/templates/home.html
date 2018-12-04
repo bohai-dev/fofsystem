@@ -34,10 +34,27 @@
             
             var queryForm = new Vue({
                 el:'#queryForm',
-                data:{item:{}},
+                data:{item:{},
+                    company:[],
+                    selected:''},
+                mounted:function (){
+                    this.queryCompany();
+                },
                 methods:{
                     query:function(){
                         $('#table').bootstrapTable('refresh', {silent: true});
+                    },
+                    queryCompany:function(){
+                        this.$http.get('company/selectall').then(response => {
+                            // success callback
+                            if(response.body.errorCode == '0000'){
+                                this.company = response.body.data;
+                            }else{
+                                toastr.error('获取公司失败'+response.body.errorMsg);
+                            }
+                        }, response => {
+                            toastr.error('获取公司失败'+response.body.message);
+                        });
                     }
                 }
             });
@@ -170,7 +187,14 @@
                                 
                                 <label class="col-sm-2 col-md-1 control-label">公司编号</label>
                                 <div class="col-sm-10 col-md-2">
-                                    <input type="text" class="form-control">
+                                    <el-select v-model="selected" filterable clearable placeholder="请选择">
+                                        <el-option
+                                          v-for="c in company"
+                                          :key="c.companyId"
+                                          :label="c.fullName+'('+c.companyId+')'"
+                                          :value="c.companyId">
+                                        </el-option>
+                                    </el-select>
                                 </div>
                           
                                 <label class="col-sm-2 col-md-1 control-label">公司全称</label>
