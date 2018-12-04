@@ -59,7 +59,7 @@ public class ProductScoreController {
     }
 
     @PostMapping("/selectbyconditions")
-    public ReturnBody<List<ProductScore>> selectByConditions(@RequestBody ProductScore conProScore){
+    public ReturnBody<List<ProductScore>> selectByConditions(@RequestBody(required=false) ProductScore conProScore){
         ReturnBody<List<ProductScore>> returnBody=new ReturnBody<>();
         List<ProductScore> list=productScoreService.selectByConditions(conProScore);
         returnBody.setData(list);

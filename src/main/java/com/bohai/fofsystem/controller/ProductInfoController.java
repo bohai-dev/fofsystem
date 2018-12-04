@@ -49,7 +49,7 @@ public class ProductInfoController {
     }
 
     @PostMapping("/selectbyconditions")
-    public ReturnBody<List<ProductInfo>> selectByConditions(@RequestBody ProductInfo productInfo){
+    public ReturnBody<List<ProductInfo>> selectByConditions(@RequestBody(required=false) ProductInfo productInfo){
 
         ReturnBody<List<ProductInfo>> returnBody=new ReturnBody<>();
         List<ProductInfo> list=productService.selectByConditions(productInfo);

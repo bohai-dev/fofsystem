@@ -44,11 +44,19 @@
             
             var addForm = new Vue({
                 el:'#addForm',
-                data:{item:{}
+                data:{item:{},
+                    company:[],
+                    selected:'',
+                    product:[],
+                    selectedProduct:''
+                },
+                mounted:function (){
+                    this.queryCompany();
+                    this.queryProduct();
                 },
                 methods:{
                     add:function(){
-                        this.$http.post('companyscore/add',this.item).then(response => {
+                        this.$http.post('productscore/add',this.item).then(response => {
                             // success callback
                             if(response.body.errorCode == '0000'){
                                 $('#addModal').modal('hide')
@@ -60,6 +68,30 @@
                         }, response => {
                             toastr.error('保存失败'+response.body.message);
                         });
+                    },
+                    queryCompany:function(){
+                        this.$http.get('company/selectall').then(response => {
+                            // success callback
+                            if(response.body.errorCode == '0000'){
+                                this.company = response.body.data;
+                            }else{
+                                toastr.error('获取公司失败'+response.body.errorMsg);
+                            }
+                        }, response => {
+                            toastr.error('获取公司失败'+response.body.message);
+                        });
+                    },
+                    queryProduct:function(){
+                        this.$http.post('product/selectbyconditions').then(response => {
+                            // success callback
+                            if(response.body.errorCode == '0000'){
+                                this.product = response.body.data;
+                            }else{
+                                toastr.error('获取产品失败'+response.body.errorMsg);
+                            }
+                        }, response => {
+                            toastr.error('获取产品失败'+response.body.message);
+                        });
                     }
                 }
             });
@@ -69,7 +101,7 @@
                 data:{item:{}},
                 methods:{
                     update:function(){
-                        this.$http.post('companyscore/modify',this.item).then(response => {
+                        this.$http.post('productscore/modify',this.item).then(response => {
                             // success callback
                             if(response.body.errorCode == '0000'){
                                 $('#updateModal').modal('hide')
@@ -92,6 +124,9 @@
                   // `this` 指向 vm 实例
                     $('#table').bootstrapTable({
                         columns: [{
+                            field: 'scoreId',
+                            title: 'ID'
+                        },{
                             field: 'entryPerson',
                             title: '录入人'
                         }, {
@@ -107,46 +142,46 @@
                             field: 'jdNo',
                             title: '尽调编号'
                         }, {
-                            field: 'capital',
+                            field: 'strategyType',
                             title: '投资策略分类'
                         }, {
-                            field: 'publishState',
+                            field: 'netWorthDate',
                             title: '净值日期'
                         }, {
-                            field: 'adminScale',
+                            field: 'productBuildTime',
                             title: '产品成立日期'
                         }, {
-                            field: 'investment',
+                            field: 'netWorthLatest',
                             title: '1. 最新单位净值'
                         }, {
-                            field: 'teamState',
+                            field: 'cumulativeWorth',
                             title: '2. 复权累计净值'
                         }, {
-                            field: 'riskState',
+                            field: 'yearProfitTate',
                             title: '3. 年化收益率'
                         }, {
-                            field: 'productProfit',
+                            field: 'lageRevoke',
                             title: '4. 最大连续回撤'
                         }, {
-                            field: 'reputation',
+                            field: 'xiapuTate',
                             title: '5. 夏普比率'
                         }, {
-                            field: 'spreadState',
+                            field: 'xinxiRate',
                             title: '6. 信息比率'
                         }, {
-                            field: 'cooperation',
+                            field: 'kamaRate',
                             title: '7. 卡马比率'
                         }, {
-                            field: 'spreadState',
+                            field: 'suotinuoRate',
                             title: '8. 索提诺比率'
                         }, {
-                            field: 'cooperation',
+                            field: 'dRatio1',
                             title: '9. D-Ratio'
                         }, {
-                            field: 'spreadState',
+                            field: 'dRatio2',
                             title: '10. D-Ratio_'
                         }, {
-                            field: 'cooperation',
+                            field: 'totalScore',
                             title: '11.综合评价'
                         }, {
                             title: '操作',
@@ -155,7 +190,7 @@
                         }],
                         data: [],
                         pagination: true,
-                        url: "companyscore/selectbyconditions",
+                        url: "productscore/selectbyconditions",
                         method: "post",
                         toolbar: "#toolbar"
                     });
@@ -269,7 +304,7 @@
         <div class="modal-content" id="addForm">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">新建管理人评分</h4>
+            <h4 class="modal-title" id="myModalLabel">新建产品业绩评分</h4>
           </div>
           <div class="modal-body">
               <form class="form-horizontal" role="form">
@@ -280,30 +315,58 @@
                       <input type="text" class="form-control" v-model="item.entryPerson" placeholder="" />
                     </div>
                     
-                    <label class="col-sm-2 control-label">公司编号</label>
+                    <label class="col-sm-2 control-label">录入时间</label>
                     <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.companyId"  placeholder="" />
+                      <div class="block">
+                          <el-date-picker
+                            v-model="item.entryTime"
+                            type="date"
+                            placeholder="选择日期">
+                          </el-date-picker>
+                      </div>
                     </div>
                     
                   </div>
                   
                   <div class="form-group">
-                    <label class="col-sm-3 control-label">尽调编号</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.jdNo" placeholder="" />
-                    </div>
+                    
+                        <label class="col-sm-3 control-label">尽调编号</label>
+                        <div class="col-sm-3">
+                          <input type="text" class="form-control" v-model="item.jdNo" placeholder="" />
+                        </div>
+                    
                   </div>
                   
                   <hr>
                   
                   <div class="form-group">
-                    <label class="col-sm-3 control-label">1. 资本实力</label>
+                  
+                    <label class="col-sm-3 control-label">产品编号</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" v-model="item.capital" placeholder="" />
+                        <template>
+                            <el-select v-model="selectedProduct" filterable clearable placeholder="请选择">
+                                <el-option
+                                v-for="c in product"
+                                :key="c.productId"
+                                :label="c.fullName+'('+c.productId+')'"
+                                :value="c.productId">
+                                </el-option>
+                            </el-select>
+                        </template>
                     </div>
-                    <label class="col-sm-2 control-label">2. 产品发行情况</label>
+                    
+                    <label class="col-sm-2 control-label">公司编号</label>
                     <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.publishState" placeholder="" />
+                        <template>
+                            <el-select v-model="selected" filterable clearable placeholder="请选择">
+                                <el-option
+                                v-for="c in company"
+                                :key="c.companyId"
+                                :label="c.fullName+'('+c.companyId+')'"
+                                :value="c.companyId">
+                                </el-option>
+                            </el-select>
+                        </template>
                     </div>
                   </div>
                   

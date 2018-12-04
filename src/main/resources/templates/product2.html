@@ -35,8 +35,9 @@
             var queryForm = new Vue({
                 el:'#queryForm',
                 data:{item:{},
+                    loading: false,
                     company:[],
-                    selected:''},
+                    selected:{}},
                 mounted:function (){
                     this.queryCompany();
                 },
@@ -61,16 +62,10 @@
             
             var addForm = new Vue({
                 el:'#addForm',
-                data:{item:{},
-                    company:[],
-                    selected:''
-                },
-                mounted:function (){
-                    this.queryCompany();
+                data:{item:{}
                 },
                 methods:{
                     add:function(){
-                        this.item.companyId = this.selected;
                         this.$http.post('product/add',this.item).then(response => {
                             // success callback
                             if(response.body.errorCode == '0000'){
@@ -82,18 +77,6 @@
                             }
                         }, response => {
                             toastr.error('保存失败'+response.body.message);
-                        });
-                    },
-                    queryCompany:function(){
-                        this.$http.get('company/selectall').then(response => {
-                            // success callback
-                            if(response.body.errorCode == '0000'){
-                                this.company = response.body.data;
-                            }else{
-                                toastr.error('获取公司失败'+response.body.errorMsg);
-                            }
-                        }, response => {
-                            toastr.error('获取公司失败'+response.body.message);
                         });
                     }
                 }
@@ -265,11 +248,11 @@
                                 <label class="col-sm-2 col-md-1 control-label">公司编号</label>
                                 <div class="col-sm-10 col-md-2">
                                     <!-- <input type="text" class="form-control"> -->
-                                    <el-select v-model="selected" filterable clearable placeholder="请选择">
+                                    <el-select v-model="selected" placeholder="请选择公司">
                                         <el-option
                                           v-for="c in company"
                                           :key="c.companyId"
-                                          :label="c.fullName+'('+c.companyId+')'"
+                                          :label="c.fullName"
                                           :value="c.companyId">
                                         </el-option>
                                     </el-select>
@@ -340,17 +323,7 @@
                   <div class="form-group">
                     <label class="col-sm-3 control-label">公司编号</label>
                     <div class="col-sm-3">
-                      <!-- <input type="text" class="form-control" v-model="selected" placeholder="" /> -->
-                      <template>
-                       <el-select v-model="selected" filterable clearable placeholder="请选择">
-                            <el-option
-                              v-for="c in company"
-                              :key="c.companyId"
-                              :label="c.fullName+'('+c.companyId+')'"
-                              :value="c.companyId">
-                            </el-option>
-                          </el-select>
-                        </template>
+                      <input type="text" class="form-control" v-model="item.companyId" placeholder="" />
                     </div>
                     
                     <label class="col-sm-2 control-label">产品名称</label>
