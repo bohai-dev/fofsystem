@@ -38,6 +38,7 @@ public class ProductScoreService {
     public int logicDelScore(String scoreId){
 
         ProductScore productScore=new ProductScore();
+        productScore.setScoreId(scoreId);
         productScore.setIsDelete("1");
         productScore.setUpdateTime(new Date());
 
