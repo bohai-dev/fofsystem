@@ -4,22 +4,24 @@
 <head th:replace="commons :: header(~{::title},~{::script},~{::style})">
     <title>产品评分</title>
     <style type="text/css">
-    
+    .navbar-fixed-top {
+      border: 0;
+    }
         @media (min-width: 768px) {
-  .sidebar {
-    position: fixed;
-    top: 51px;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    display: block;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f5f5f5;
-    border-right: 1px solid #eee;
-  }
-}
+    .sidebar {
+	    position: fixed;
+	    top: 51px;
+	    bottom: 0;
+	    left: 0;
+	    z-index: 1000;
+	    display: block;
+	    padding: 20px;
+	    overflow-x: hidden;
+	    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+	    background-color: #f5f5f5;
+	    border-right: 1px solid #eee;
+	  }
+	}
     </style>
     <script type="text/javascript">
     
@@ -311,29 +313,29 @@
                                 <label class="col-sm-2 col-md-1 control-label">公司编号</label>
                                 <div class="col-sm-10 col-md-2">
                                     <template>
-			                            <el-select v-model="item.companyId" filterable clearable placeholder="请选择">
-			                                <el-option
-			                                v-for="c in company"
-			                                :key="c.companyId"
-			                                :label="c.fullName+'('+c.companyId+')'"
-			                                :value="c.companyId">
-			                                </el-option>
-			                            </el-select>
-			                        </template>
+                                        <el-select v-model="item.companyId" filterable clearable placeholder="请选择">
+                                            <el-option
+                                            v-for="c in company"
+                                            :key="c.companyId"
+                                            :label="c.fullName+'('+c.companyId+')'"
+                                            :value="c.companyId">
+                                            </el-option>
+                                        </el-select>
+                                    </template>
                                 </div>
                                 
                                 <label class="col-sm-2 col-md-1 control-label">产品编号</label>
                                 <div class="col-sm-10 col-md-2">
                                     <template>
-			                            <el-select v-model="item.productId" filterable clearable placeholder="请选择">
-			                                <el-option
-			                                v-for="c in product"
-			                                :key="c.productId"
-			                                :label="c.fullName+'('+c.productId+')'"
-			                                :value="c.productId">
-			                                </el-option>
-			                            </el-select>
-			                        </template>
+                                        <el-select v-model="item.productId" filterable clearable placeholder="请选择">
+                                            <el-option
+                                            v-for="c in product"
+                                            :key="c.productId"
+                                            :label="c.fullName+'('+c.productId+')'"
+                                            :value="c.productId">
+                                            </el-option>
+                                        </el-select>
+                                    </template>
                                 </div>
                           
                                 <label class="col-sm-2 col-md-1 control-label">尽调编号</label>
