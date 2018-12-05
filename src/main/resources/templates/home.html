@@ -37,14 +37,13 @@
             var queryForm = new Vue({
                 el:'#queryForm',
                 data:{item:{},
-                    company:[],
-                    selected:''},
+                    company:[]
+                },
                 mounted:function (){
                     this.queryCompany();
                 },
                 methods:{
                     query:function(){
-                        this.item.companyId = this.selected;
                         $('#table').bootstrapTable('refresh', {query: this.item});
                     },
                     queryCompany:function(){
@@ -134,7 +133,8 @@
                             formatter:this.formatter()
                         }],
                         pagination: true,
-                        url: "company/selectall",
+                        url: "company/selectbyconditions",
+                        method: "post",
                         toolbar: "#toolbar"
                     });
                 },
@@ -190,7 +190,7 @@
                                 
                                 <label class="col-sm-2 col-md-1 control-label">公司编号</label>
                                 <div class="col-sm-10 col-md-2">
-                                    <el-select v-model="selected" filterable clearable placeholder="请选择">
+                                    <el-select v-model="item.companyId" filterable clearable placeholder="请选择">
                                         <el-option
                                           v-for="c in company"
                                           :key="c.companyId"
