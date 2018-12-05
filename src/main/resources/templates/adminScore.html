@@ -74,7 +74,7 @@
                             // success callback
                             if(response.body.errorCode == '0000'){
                                 $('#addModal').modal('hide')
-                                $('#table').bootstrapTable('refresh', {silent: true});
+                                queryForm.query();
                                 toastr.success('保存成功');
                             }else{
                                 toastr.error('保存失败'+response.body.errorMsg);
@@ -225,7 +225,7 @@
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-
+                <h3>管理人评分</h3>
                 <div class="row placeholders">
 
                     <!-- 查询条件表单 -->
