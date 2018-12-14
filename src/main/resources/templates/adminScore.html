@@ -30,7 +30,7 @@
                 updateForm.item = row;
                 $('#updateModal').modal('show');
             },'click .delete': function (e, value, row, index) {
-                tableApp.delete(row.scoreId);
+                tableApp.delete(row);
             }};
             
             var queryForm = new Vue({
@@ -183,19 +183,30 @@
                     });
                 },
                 methods:{
-                    delete:function(companyScoreId){
-                        this.$http.get('companyscore/delete?companyScoreId='+companyScoreId).then(response => {
-                            // success callback
-                            if(response.body.errorCode == '0000'){
-                                $('#updateModal').modal('hide')
-                                $('#table').bootstrapTable('refresh', {silent: true});
-                                toastr.success('删除成功');
-                            }else{
-                                toastr.error('删除失败'+response.body.errorMsg);
-                            }
-                        }, response => {
-                            toastr.error('删除失败'+response.body.message);
-                        });
+                    delete:function(row){
+                        this.$confirm('此操作将永久删除该评分, 是否继续?', '提示', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                          }).then(() => {
+                              this.$http.get('companyscore/delete?companyScoreId='+row.scoreId).then(response => {
+                                  // success callback
+                                  if(response.body.errorCode == '0000'){
+                                      $('#updateModal').modal('hide')
+                                      $('#table').bootstrapTable('refresh', {silent: true});
+                                      toastr.success('删除成功');
+                                  }else{
+                                      toastr.error('删除失败'+response.body.errorMsg);
+                                  }
+                              }, response => {
+                                  toastr.error('删除失败'+response.body.message);
+                              });
+                          }).catch(() => {
+                            this.$message({
+                              type: 'info',
+                              message: '已取消删除'
+                            });          
+                          });
                     },
                     openModal:function(row){
                         this.item = row;

@@ -262,18 +262,31 @@
                 },
                 methods:{
                     delete:function(scoreId){
-                        this.$http.get('productscore/delete?scoreId='+scoreId).then(response => {
-                            // success callback
-                            if(response.body.errorCode == '0000'){
-                                $('#updateModal').modal('hide')
-                                $('#table').bootstrapTable('refresh', {silent: true});
-                                toastr.success('删除成功');
-                            }else{
-                                toastr.error('删除失败'+response.body.errorMsg);
-                            }
-                        }, response => {
-                            toastr.error('删除失败'+response.body.message);
-                        });
+                        
+                        this.$confirm('此操作将永久删除该评分信息, 是否继续?', '提示', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                          }).then(() => {
+                              this.$http.get('productscore/delete?scoreId='+scoreId).then(response => {
+                                  // success callback
+                                  if(response.body.errorCode == '0000'){
+                                      $('#updateModal').modal('hide')
+                                      $('#table').bootstrapTable('refresh', {silent: true});
+                                      toastr.success('删除成功');
+                                  }else{
+                                      toastr.error('删除失败'+response.body.errorMsg);
+                                  }
+                              }, response => {
+                                  toastr.error('删除失败'+response.body.message);
+                              });
+                          }).catch(() => {
+                            this.$message({
+                              type: 'info',
+                              message: '已取消删除'
+                            });          
+                          });
+                        
                     },
                     openModal:function(row){
                         this.item = row;
@@ -303,9 +316,7 @@
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             
-                <h3>产品业绩评分</h3>
                 <div class="row placeholders">
-            
                         <!-- 查询条件表单 -->
                       <form id="queryForm" class="form-horizontal" style="margin-top: 30px">
                           <div class="form-group">
@@ -551,7 +562,7 @@
         <div class="modal-content" id="updateForm">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">更新管理人基本信息</h4>
+            <h4 class="modal-title" id="myModalLabel">更新产品业绩评分</h4>
           </div>
           <div class="modal-body">
               <form class="form-horizontal" role="form">
