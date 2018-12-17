@@ -447,11 +447,7 @@
 
                             <label class="col-sm-2 control-label">录入时间</label>
                             <div class="col-sm-3">
-                                <div class="block">
-                                    <el-date-picker v-model="item.entryTime" type="date"
-                                        value-format="yyyy-MM-dd" placeholder="选择日期">
-                                    </el-date-picker>
-                                </div>
+                                <input type="text" class="form-control" v-model="item.entryTime" placeholder="" readonly="readonly"/>
                             </div>
 
                         </div>
