@@ -42,7 +42,7 @@
 <body>
 
 	<div th:fragment="navbar">
-		<nav class="navbar navbar-default navbar-inverse" role="navigation">
+		<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target="#bs-example-navbar-collapse-1">
@@ -59,15 +59,16 @@
 					<li><a href="home">管理人信息</a></li>
 					<li><a href="product">产品信息</a></li>
 					<li><a href="adminScore">管理人评分</a></li>
+					<li><a href="productScore">产品业绩评分表</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">Link</a></li>
+					<!-- <li><a href="#">Link</a></li> -->
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">我的<strong class="caret"></strong></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">Another action</a></li>
+							<!-- <li><a href="#">Another action</a></li>
 							<li><a href="#">Something else here</a></li>
-							<li class="divider"></li>
+							<li class="divider"></li> -->
 							<li><a th:href="@{/logout}">退出登录</a></li>
 						</ul></li>
 				</ul>

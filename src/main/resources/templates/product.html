@@ -29,20 +29,19 @@
                 updateForm.item = row;
                 $('#updateModal').modal('show');
             },'click .delete': function (e, value, row, index) {
-                tableApp.delete(row.companyId);
+                tableApp.delete(row);
             }};
             
             var queryForm = new Vue({
                 el:'#queryForm',
                 data:{item:{},
-                    company:[],
-                    selected:''},
+                    company:[]},
                 mounted:function (){
                     this.queryCompany();
                 },
                 methods:{
                     query:function(){
-                        $('#table').bootstrapTable('refresh', {silent: true});
+                        $('#table').bootstrapTable('refresh', {query: this.item});
                     },
                     queryCompany:function(){
                         this.$http.get('company/selectall').then(response => {
@@ -62,20 +61,18 @@
             var addForm = new Vue({
                 el:'#addForm',
                 data:{item:{},
-                    company:[],
-                    selected:''
+                    company:[]
                 },
                 mounted:function (){
                     this.queryCompany();
                 },
                 methods:{
                     add:function(){
-                        this.item.companyId = this.selected;
                         this.$http.post('product/add',this.item).then(response => {
                             // success callback
                             if(response.body.errorCode == '0000'){
                                 $('#addModal').modal('hide')
-                                $('#table').bootstrapTable('refresh', {silent: true});
+                                queryForm.query();
                                 toastr.success('保存成功');
                             }else{
                                 toastr.error('保存失败'+response.body.errorMsg);
@@ -89,6 +86,7 @@
                             // success callback
                             if(response.body.errorCode == '0000'){
                                 this.company = response.body.data;
+                                updateForm.company = response.body.data;
                             }else{
                                 toastr.error('获取公司失败'+response.body.errorMsg);
                             }
@@ -101,7 +99,8 @@
             
             var updateForm = new Vue({
                 el:'#updateForm',
-                data:{item:{}},
+                data:{item:{},
+                    company:[]},
                 methods:{
                     update:function(){
                         this.$http.post('product/modify',this.item).then(response => {
@@ -213,19 +212,32 @@
                     });
                 },
                 methods:{
-                    delete:function(companyId){
-                        this.$http.get('product/delete?companyId='+companyId).then(response => {
-                            // success callback
-                            if(response.body.errorCode == '0000'){
-                                $('#updateModal').modal('hide')
-                                $('#table').bootstrapTable('refresh', {silent: true});
-                                toastr.success('删除成功');
-                            }else{
-                                toastr.error('删除失败'+response.body.errorMsg);
-                            }
-                        }, response => {
-                            toastr.error('删除失败'+response.body.message);
-                        });
+                    delete:function(row){
+                        
+                        this.$confirm('此操作将永久删除产品'+row.fullName+', 是否继续?', '提示', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                          }).then(() => {
+                              this.$http.get('product/delete?productId='+row.productId).then(response => {
+                                  // success callback
+                                  if(response.body.errorCode == '0000'){
+                                      $('#updateModal').modal('hide')
+                                      $('#table').bootstrapTable('refresh', {silent: true});
+                                      toastr.success('删除成功');
+                                  }else{
+                                      toastr.error('删除失败'+response.body.errorMsg);
+                                  }
+                              }, response => {
+                                  toastr.error('删除失败'+response.body.message);
+                              });
+                          }).catch(() => {
+                            this.$message({
+                              type: 'info',
+                              message: '已取消删除'
+                            });          
+                          });
+                        
                     },
                     openModal:function(row){
                         this.item = row;
@@ -255,7 +267,7 @@
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             
-            
+                <h3>产品信息</h3>
                 <div class="row placeholders">
             
                         <!-- 查询条件表单 -->
@@ -265,7 +277,7 @@
                                 <label class="col-sm-2 col-md-1 control-label">公司编号</label>
                                 <div class="col-sm-10 col-md-2">
                                     <!-- <input type="text" class="form-control"> -->
-                                    <el-select v-model="selected" filterable clearable placeholder="请选择">
+                                    <el-select v-model="item.companyId" filterable clearable placeholder="请选择">
                                         <el-option
                                           v-for="c in company"
                                           :key="c.companyId"
@@ -277,17 +289,17 @@
                           
                                 <label class="col-sm-2 col-md-1 control-label">产品名称</label>
                                 <div class="col-sm-10 col-md-2">
-                                  <input type="text" class="form-control" >
+                                  <input type="text" class="form-control" v-model="item.fullName">
                                 </div>
                                 
                                 <label class="col-sm-2 col-md-1 control-label">协会备案编号</label>
                                 <div class="col-sm-10 col-md-2">
-                                  <input type="text" class="form-control" >
+                                  <input type="text" class="form-control" v-model="item.recordNo">
                                 </div>
                             
                           </div>
                           
-                          <div class="form-group">
+                          <!-- <div class="form-group">
                                 
                                 <label class="col-sm-2 col-md-1 control-label">产品成立日期</label>
                                 <div class="col-sm-10 col-md-2">
@@ -295,12 +307,13 @@
                                         <el-date-picker
                                           v-model="item.recordDate"
                                           type="date"
+                                          value-format="yyyy-MM-dd"
                                           placeholder="选择日期">
                                         </el-date-picker>
                                     </div>
                                 </div>
                             
-                          </div>
+                          </div> -->
                           
                           <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10 col-md-2 col-md-offset-4 ">
@@ -342,7 +355,7 @@
                     <div class="col-sm-3">
                       <!-- <input type="text" class="form-control" v-model="selected" placeholder="" /> -->
                       <template>
-                       <el-select v-model="selected" filterable clearable placeholder="请选择">
+                       <el-select v-model="item.companyId" filterable clearable placeholder="请选择">
                             <el-option
                               v-for="c in company"
                               :key="c.companyId"
@@ -379,6 +392,7 @@
                             <el-date-picker
                               v-model="item.recordDate"
                               type="date"
+                              value-format="yyyy-MM-dd"
                               placeholder="选择日期">
                             </el-date-picker>
                         </div>
@@ -390,6 +404,7 @@
                             <el-date-picker
                               v-model="item.buildTime"
                               type="date"
+                              value-format="yyyy-MM-dd"
                               placeholder="选择日期">
                             </el-date-picker>
                         </div>
@@ -403,6 +418,7 @@
                             <el-date-picker
                               v-model="item.finishTime"
                               type="date"
+                              value-format="yyyy-MM-dd"
                               placeholder="选择日期">
                             </el-date-picker>
                         </div>
@@ -545,8 +561,19 @@
                   <div class="form-group">
                     <label class="col-sm-3 control-label">公司编号</label>
                     <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.companyId" placeholder="" />
+                      <template>
+                       <el-select v-model="item.companyId" filterable clearable placeholder="请选择">
+                            <el-option
+                              v-for="c in company"
+                              :key="c.companyId"
+                              :label="c.fullName+'('+c.companyId+')'"
+                              :value="c.companyId">
+                            </el-option>
+                          </el-select>
+                        </template>
                     </div>
+                    
+                    
                     
                     <label class="col-sm-2 control-label">产品名称</label>
                     <div class="col-sm-3">
@@ -574,6 +601,7 @@
                             <el-date-picker
                               v-model="item.recordDate"
                               type="date"
+                              value-format="yyyy-MM-dd"
                               placeholder="选择日期">
                             </el-date-picker>
                         </div>
@@ -585,6 +613,7 @@
                             <el-date-picker
                               v-model="item.buildTime"
                               type="date"
+                              value-format="yyyy-MM-dd"
                               placeholder="选择日期">
                             </el-date-picker>
                         </div>
@@ -598,6 +627,7 @@
                             <el-date-picker
                               v-model="item.finishTime"
                               type="date"
+                              value-format="yyyy-MM-dd"
                               placeholder="选择日期">
                             </el-date-picker>
                         </div>

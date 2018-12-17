@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace="commons :: header(~{::title},~{::script},~{::style})">
-    <title>管理人评分</title>
-    <style type="text/css">
-        .sidebar {
-            position: fixed;
-            top: 51px;
-            bottom: 0;
-            left: 0;
-            z-index: 1000;
-            display: block;
-            padding: 20px;
-            overflow-x: hidden;
-            overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-            background-color: #f5f5f5;
-            border-right: 1px solid #eee;
-          }
-    </style>
-    <script type="text/javascript">
+<title>管理人评分</title>
+<style type="text/css">
+.sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+}
+</style>
+<script type="text/javascript">
     
         window.onload = function(){
             
@@ -29,22 +30,43 @@
                 updateForm.item = row;
                 $('#updateModal').modal('show');
             },'click .delete': function (e, value, row, index) {
-                tableApp.delete(row.companyId);
+                tableApp.delete(row);
             }};
             
             var queryForm = new Vue({
                 el:'#queryForm',
-                data:{item:{}},
+                data:{item:{},
+                    company:[]
+                },
+                mounted:function (){
+                    this.queryCompany();
+                },
                 methods:{
                     query:function(){
-                        $('#table').bootstrapTable('refresh', {silent: true});
-                    }
+                        $('#table').bootstrapTable('refresh', {query: this.item});
+                    },
+                    queryCompany:function(){
+                        this.$http.get('company/selectall').then(response => {
+                            // success callback
+                            if(response.body.errorCode == '0000'){
+                                this.company = response.body.data;
+                            }else{
+                                toastr.error('获取公司失败'+response.body.errorMsg);
+                            }
+                        }, response => {
+                            toastr.error('获取公司失败'+response.body.message);
+                        });
+                    },
                 }
             });
             
             var addForm = new Vue({
                 el:'#addForm',
-                data:{item:{}
+                data:{item:{},
+                    company:[]
+                },
+                mounted:function (){
+                    this.queryCompany();
                 },
                 methods:{
                     add:function(){
@@ -52,13 +74,25 @@
                             // success callback
                             if(response.body.errorCode == '0000'){
                                 $('#addModal').modal('hide')
-                                $('#table').bootstrapTable('refresh', {silent: true});
+                                queryForm.query();
                                 toastr.success('保存成功');
                             }else{
                                 toastr.error('保存失败'+response.body.errorMsg);
                             }
                         }, response => {
                             toastr.error('保存失败'+response.body.message);
+                        });
+                    },
+                    queryCompany:function(){
+                        this.$http.get('company/selectall').then(response => {
+                            // success callback
+                            if(response.body.errorCode == '0000'){
+                                this.company = response.body.data;
+                            }else{
+                                toastr.error('获取公司失败'+response.body.errorMsg);
+                            }
+                        }, response => {
+                            toastr.error('获取公司失败'+response.body.message);
                         });
                     }
                 }
@@ -149,19 +183,30 @@
                     });
                 },
                 methods:{
-                    delete:function(companyScoreId){
-                        this.$http.get('companyscore/delete?companyScoreId='+companyScoreId).then(response => {
-                            // success callback
-                            if(response.body.errorCode == '0000'){
-                                $('#updateModal').modal('hide')
-                                $('#table').bootstrapTable('refresh', {silent: true});
-                                toastr.success('删除成功');
-                            }else{
-                                toastr.error('删除失败'+response.body.errorMsg);
-                            }
-                        }, response => {
-                            toastr.error('删除失败'+response.body.message);
-                        });
+                    delete:function(row){
+                        this.$confirm('此操作将永久删除该评分, 是否继续?', '提示', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                          }).then(() => {
+                              this.$http.get('companyscore/delete?companyScoreId='+row.scoreId).then(response => {
+                                  // success callback
+                                  if(response.body.errorCode == '0000'){
+                                      $('#updateModal').modal('hide')
+                                      $('#table').bootstrapTable('refresh', {silent: true});
+                                      toastr.success('删除成功');
+                                  }else{
+                                      toastr.error('删除失败'+response.body.errorMsg);
+                                  }
+                              }, response => {
+                                  toastr.error('删除失败'+response.body.message);
+                              });
+                          }).catch(() => {
+                            this.$message({
+                              type: 'info',
+                              message: '已取消删除'
+                            });          
+                          });
                     },
                     openModal:function(row){
                         this.item = row;
@@ -183,287 +228,333 @@
     </script>
 </head>
 <body>
-        <div th:include="commons :: navbar"></div>
-        <div class="container-fluid">
+    <div th:include="commons :: navbar"></div>
+    <div class="container-fluid">
         <div class="row-fluid">
             <div class="col-sm-3 col-md-2 sidebar">
                 <div th:include="commons :: leftnavbar"></div>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            
-            
+
+                <h3>管理人评分</h3>
                 <div class="row placeholders">
-            
-                        <!-- 查询条件表单 -->
-                      <form id="queryForm" class="form-horizontal" style="margin-top: 30px">
-                          <div class="form-group">
-                                
-                                <label class="col-sm-2 col-md-1 control-label">公司编号</label>
-                                <div class="col-sm-10 col-md-2">
-                                    <input type="text" class="form-control" v-model="item.companyId">
-                                </div>
-                          
-                                <label class="col-sm-2 col-md-1 control-label">尽调编号</label>
-                                <div class="col-sm-10 col-md-2">
-                                  <input type="text" class="form-control" v-model="item.jdNo">
-                                </div>
-                                
-                                <label class="col-sm-2 col-md-1 control-label">录入时间</label>
-                                <div class="col-sm-10 col-md-2">
-                                    <div class="block">
-                                        <el-date-picker
-                                          v-model="item.entryTime"
-                                          type="date"
-                                          placeholder="选择日期">
-                                        </el-date-picker>
-                                    </div>
-                                </div>
-                            
-                          </div>
-                          
-                          <div class="form-group">
-                                
-                                
-                            
-                          </div>
-                          
-                          <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10 col-md-2 col-md-offset-4 ">
-                              <input class="btn btn-default col-xs-7" type="button" value="查询" @click="query()">
+
+                    <!-- 查询条件表单 -->
+                    <form id="queryForm" class="form-horizontal"
+                        style="margin-top: 30px">
+                        <div class="form-group">
+
+                            <label class="col-sm-2 col-md-1 control-label">公司编号</label>
+                            <div class="col-sm-10 col-md-2">
+                                <template> <el-select v-model="item.companyId"
+                                    filterable clearable placeholder="请选择"> <el-option
+                                    v-for="c in company" :key="c.companyId"
+                                    :label="c.fullName+'('+c.companyId+')'" :value="c.companyId">
+                                </el-option> </el-select> </template>
                             </div>
-                          </div>
-                      </form>
-                      <!-- 查询条件表单结束 -->
+
+                            <label class="col-sm-2 col-md-1 control-label">尽调编号</label>
+                            <div class="col-sm-10 col-md-2">
+                                <input type="text" class="form-control" v-model="item.jdNo">
+                            </div>
+
+                            <label class="col-sm-2 col-md-1 control-label">录入时间</label>
+                            <div class="col-sm-10 col-md-2">
+                                <div class="block">
+                                    <el-date-picker v-model="item.entryTime" type="date"
+                                        value-format="yyyy-MM-dd" placeholder="选择日期"> 
+                                    </el-date-picker>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group"></div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10 col-md-2 col-md-offset-4 ">
+                                <input class="btn btn-default col-xs-7" type="button" value="查询"
+                                    @click="query()">
+                            </div>
+                        </div>
+                    </form>
+                    <!-- 查询条件表单结束 -->
                 </div>
-                
+
                 <div class="table-responsive" id="tableApp">
                     <div id="toolbar" class="btn-group">
-                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addModal" title="新增记录">
+                        <button type="button" class="btn btn-default" data-toggle="modal"
+                            data-target="#addModal" title="新增记录">
                             <i class="glyphicon glyphicon-plus">新增记录</i>
                         </button>
                     </div>
                     <table id="table"></table>
-                    
-                    
+
+
                 </div>
-                
+
             </div>
-            
+
         </div>
     </div>
-    
-    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content" id="addForm">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">新建管理人评分</h4>
-          </div>
-          <div class="modal-body">
-              <form class="form-horizontal" role="form">
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">录入人</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.entryPerson" placeholder="" />
-                    </div>
-                    
-                    <label class="col-sm-2 control-label">公司编号</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.companyId"  placeholder="" />
-                    </div>
-                    
-                  </div>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">尽调编号</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.jdNo" placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">1. 资本实力</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" v-model="item.capital" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">2. 产品发行情况</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.publishState" placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">3. 管理规模</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" v-model="item.adminScale" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">4. 投资安排</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" v-model="item.investment" placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">5. 管理团队状况 </label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.teamState" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">6. 合规风控体系 </label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.riskState" placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">7. 产品收益</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.productProfit" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">8. 业内知名度</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.reputation"  placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">9. 产品推广性</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.spreadState" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">10. 过往合作情况</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.cooperation"  placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">11. 合计评分</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.totalScore" placeholder="" />
-                    </div>
-                  </div>
-                </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary" v-on:click="add()">保存</button>
-          </div>
+
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="addForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">新建管理人评分</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">录入人</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.entryPerson" placeholder="" />
+                            </div>
+
+                            <label class="col-sm-2 control-label">公司编号</label>
+                            <div class="col-sm-3">
+                                <template> <el-select v-model="item.companyId"
+                                    filterable clearable placeholder="请选择"> <el-option
+                                    v-for="c in company" :key="c.companyId"
+                                    :label="c.fullName+'('+c.companyId+')'" :value="c.companyId">
+                                </el-option> </el-select> </template>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">尽调编号</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" v-model="item.jdNo"
+                                    placeholder="" />
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">1. 资本实力</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" v-model="item.capital"
+                                    placeholder="" />
+                            </div>
+                            <label class="col-sm-2 control-label">2. 产品发行情况</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.publishState" placeholder="" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">3. 管理规模</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.adminScale" placeholder="" />
+                            </div>
+                            <label class="col-sm-2 control-label">4. 投资安排</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.investment" placeholder="" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">5. 管理团队状况 </label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" v-model="item.teamState"
+                                    placeholder="" />
+                            </div>
+                            <label class="col-sm-2 control-label">6. 合规风控体系 </label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" v-model="item.riskState"
+                                    placeholder="" />
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">7. 产品收益</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.productProfit" placeholder="" />
+                            </div>
+                            <label class="col-sm-2 control-label">8. 业内知名度</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.reputation" placeholder="" />
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">9. 产品推广性</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.spreadState" placeholder="" />
+                            </div>
+                            <label class="col-sm-2 control-label">10. 过往合作情况</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.cooperation" placeholder="" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">11. 合计评分</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.totalScore" placeholder="" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" v-on:click="add()">保存</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    
-    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content" id="updateForm">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">更新管理人基本信息</h4>
-          </div>
-          <div class="modal-body">
-              <form class="form-horizontal" role="form">
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">录入人</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.entryPerson" placeholder="" />
-                    </div>
-                    
-                    <label class="col-sm-2 control-label">公司编号</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.companyId"  placeholder="" />
-                    </div>
-                    
-                  </div>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">尽调编号</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.jdNo" placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">1. 资本实力</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" v-model="item.capital" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">2. 产品发行情况</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.publishState" placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">3. 管理规模</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" v-model="item.adminScale" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">4. 投资安排</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" v-model="item.investment" placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">5. 管理团队状况 </label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.teamState" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">6. 合规风控体系 </label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.riskState" placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">7. 产品收益</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.productProfit" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">8. 业内知名度</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.reputation"  placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">9. 产品推广性</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.spreadState" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">10. 过往合作情况</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.cooperation"  placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">11. 合计评分</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.totalScore" placeholder="" />
-                    </div>
-                  </div>
-                </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary" v-on:click="update()">更新</button>
-          </div>
+
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="updateForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">更新管理人评分</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">录入人</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.entryPerson" placeholder="" />
+                            </div>
+
+                            <label class="col-sm-2 control-label">录入时间</label>
+                            <div class="col-sm-3">
+                                <div class="block">
+                                    <el-date-picker v-model="item.entryTime" type="date"
+                                        value-format="yyyy-MM-dd" placeholder="选择日期">
+                                    </el-date-picker>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">公司编号</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" v-model="item.companyId"
+                                    placeholder="" />
+                            </div>
+                            <label class="col-sm-2 control-label">尽调编号</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" v-model="item.jdNo"
+                                    placeholder="" />
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">1. 资本实力</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" v-model="item.capital"
+                                    placeholder="" />
+                            </div>
+                            <label class="col-sm-2 control-label">2. 产品发行情况</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.publishState" placeholder="" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">3. 管理规模</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.adminScale" placeholder="" />
+                            </div>
+                            <label class="col-sm-2 control-label">4. 投资安排</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.investment" placeholder="" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">5. 管理团队状况 </label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" v-model="item.teamState"
+                                    placeholder="" />
+                            </div>
+                            <label class="col-sm-2 control-label">6. 合规风控体系 </label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" v-model="item.riskState"
+                                    placeholder="" />
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">7. 产品收益</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.productProfit" placeholder="" />
+                            </div>
+                            <label class="col-sm-2 control-label">8. 业内知名度</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.reputation" placeholder="" />
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">9. 产品推广性</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.spreadState" placeholder="" />
+                            </div>
+                            <label class="col-sm-2 control-label">10. 过往合作情况</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.cooperation" placeholder="" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">11. 合计评分</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control"
+                                    v-model="item.totalScore" placeholder="" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" v-on:click="update()">更新</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
 </body>

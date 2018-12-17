@@ -4,21 +4,36 @@
 <head th:replace="commons :: header(~{::title},~{::script},~{::style})">
     <title>产品评分</title>
     <style type="text/css">
-        .sidebar {
-            position: fixed;
-            top: 51px;
-            bottom: 0;
-            left: 0;
-            z-index: 1000;
-            display: block;
-            padding: 20px;
-            overflow-x: hidden;
-            overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-            background-color: #f5f5f5;
-            border-right: 1px solid #eee;
-          }
+    .navbar-fixed-top {
+      border: 0;
+    }
+        @media (min-width: 768px) {
+    .sidebar {
+	    position: fixed;
+	    top: 51px;
+	    bottom: 0;
+	    left: 0;
+	    z-index: 1000;
+	    display: block;
+	    padding: 20px;
+	    overflow-x: hidden;
+	    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+	    background-color: #f5f5f5;
+	    border-right: 1px solid #eee;
+	  }
+	}
     </style>
     <script type="text/javascript">
+    
+        function queryParams(params){
+            var temp = {
+                    pageSize: params.limit,   //页面大小  
+                    pageNumber: params.pageNumber,  //页码  
+                    sort: params.sort,  //排序列名  
+                    sortOrder: params.order//排位命令（desc，asc）  
+                  };  
+                  return temp;
+        }
     
         window.onload = function(){
             
@@ -29,45 +44,24 @@
                 updateForm.item = row;
                 $('#updateModal').modal('show');
             },'click .delete': function (e, value, row, index) {
-                tableApp.delete(row.companyId);
+                tableApp.delete(row.scoreId);
             }};
             
             var queryForm = new Vue({
                 el:'#queryForm',
-                data:{item:{}},
-                methods:{
-                    query:function(){
-                        $('#table').bootstrapTable('refresh', {silent: true});
-                    }
-                }
-            });
-            
-            var addForm = new Vue({
-                el:'#addForm',
                 data:{item:{},
                     company:[],
-                    selected:'',
-                    product:[],
-                    selectedProduct:''
+                    product:[]
                 },
                 mounted:function (){
                     this.queryCompany();
                     this.queryProduct();
                 },
                 methods:{
-                    add:function(){
-                        this.$http.post('productscore/add',this.item).then(response => {
-                            // success callback
-                            if(response.body.errorCode == '0000'){
-                                $('#addModal').modal('hide')
-                                $('#table').bootstrapTable('refresh', {silent: true});
-                                toastr.success('保存成功');
-                            }else{
-                                toastr.error('保存失败'+response.body.errorMsg);
-                            }
-                        }, response => {
-                            toastr.error('保存失败'+response.body.message);
-                        });
+                    query:function(){
+                        $('#table').bootstrapTable('refresh', 
+                                {query: this.item}
+                        );
                     },
                     queryCompany:function(){
                         this.$http.get('company/selectall').then(response => {
@@ -96,9 +90,72 @@
                 }
             });
             
+            var addForm = new Vue({
+                el:'#addForm',
+                data:{item:{},
+                    company:[],
+                    product:[],
+                },
+                mounted:function (){
+                    this.queryCompany();
+                    this.queryProduct();
+                },
+                methods:{
+                    add:function(){
+                        this.$http.post('productscore/add',this.item).then(response => {
+                            // success callback
+                            if(response.body.errorCode == '0000'){
+                                $('#addModal').modal('hide')
+                                queryForm.query();
+                                toastr.success('保存成功');
+                            }else{
+                                toastr.error('保存失败'+response.body.errorMsg);
+                            }
+                        }, response => {
+                            toastr.error('保存失败'+response.body.message);
+                        });
+                    },
+                    queryCompany:function(){
+                        this.$http.get('company/selectall').then(response => {
+                            // success callback
+                            if(response.body.errorCode == '0000'){
+                                this.company = response.body.data;
+                                updateForm.company = response.body.data;
+                            }else{
+                                toastr.error('获取公司失败'+response.body.errorMsg);
+                            }
+                        }, response => {
+                            toastr.error('获取公司失败'+response.body.message);
+                        });
+                    },
+                    queryProduct:function(){
+                        this.$http.post('product/selectbyconditions').then(response => {
+                            // success callback
+                            if(response.body.errorCode == '0000'){
+                                this.product = response.body.data;
+                                updateForm.product = response.body.data;
+                            }else{
+                                toastr.error('获取产品失败'+response.body.errorMsg);
+                            }
+                        }, response => {
+                            toastr.error('获取产品失败'+response.body.message);
+                        });
+                    },
+                    productChange:function(row){
+                        console.log(row);
+                        this.item.productId = row.productId;
+                        this.item.companyId = row.companyId;
+                        this.item.strategyType = row.strategyType;
+                        this.item.productBuildTime = row.buildTime;
+                    }
+                }
+            });
+            
             var updateForm = new Vue({
                 el:'#updateForm',
-                data:{item:{}},
+                data:{item:{},
+                    company:[],
+                    product:[]},
                 methods:{
                     update:function(){
                         this.$http.post('productscore/modify',this.item).then(response => {
@@ -113,6 +170,13 @@
                         }, response => {
                             toastr.error('更新失败'+response.body.message);
                         });
+                    },
+                    productChange:function(row){
+                        console.log(row);
+                        this.item.productId = row.productId;
+                        this.item.companyId = row.companyId;
+                        this.item.strategyType = row.strategyType;
+                        this.item.productBuildTime = row.buildTime;
                     }
                 }
             });
@@ -191,24 +255,38 @@
                         data: [],
                         pagination: true,
                         url: "productscore/selectbyconditions",
+                        queryParams: queryParams,
                         method: "post",
                         toolbar: "#toolbar"
                     });
                 },
                 methods:{
-                    delete:function(companyScoreId){
-                        this.$http.get('companyscore/delete?companyScoreId='+companyScoreId).then(response => {
-                            // success callback
-                            if(response.body.errorCode == '0000'){
-                                $('#updateModal').modal('hide')
-                                $('#table').bootstrapTable('refresh', {silent: true});
-                                toastr.success('删除成功');
-                            }else{
-                                toastr.error('删除失败'+response.body.errorMsg);
-                            }
-                        }, response => {
-                            toastr.error('删除失败'+response.body.message);
-                        });
+                    delete:function(scoreId){
+                        
+                        this.$confirm('此操作将永久删除该评分信息, 是否继续?', '提示', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                          }).then(() => {
+                              this.$http.get('productscore/delete?scoreId='+scoreId).then(response => {
+                                  // success callback
+                                  if(response.body.errorCode == '0000'){
+                                      $('#updateModal').modal('hide')
+                                      $('#table').bootstrapTable('refresh', {silent: true});
+                                      toastr.success('删除成功');
+                                  }else{
+                                      toastr.error('删除失败'+response.body.errorMsg);
+                                  }
+                              }, response => {
+                                  toastr.error('删除失败'+response.body.message);
+                              });
+                          }).catch(() => {
+                            this.$message({
+                              type: 'info',
+                              message: '已取消删除'
+                            });          
+                          });
+                        
                     },
                     openModal:function(row){
                         this.item = row;
@@ -238,16 +316,37 @@
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             
-            
                 <div class="row placeholders">
-            
                         <!-- 查询条件表单 -->
                       <form id="queryForm" class="form-horizontal" style="margin-top: 30px">
                           <div class="form-group">
                                 
                                 <label class="col-sm-2 col-md-1 control-label">公司编号</label>
                                 <div class="col-sm-10 col-md-2">
-                                    <input type="text" class="form-control" v-model="item.companyId">
+                                    <template>
+                                        <el-select v-model="item.companyId" filterable clearable placeholder="请选择">
+                                            <el-option
+                                            v-for="c in company"
+                                            :key="c.companyId"
+                                            :label="c.fullName+'('+c.companyId+')'"
+                                            :value="c.companyId">
+                                            </el-option>
+                                        </el-select>
+                                    </template>
+                                </div>
+                                
+                                <label class="col-sm-2 col-md-1 control-label">产品编号</label>
+                                <div class="col-sm-10 col-md-2">
+                                    <template>
+                                        <el-select v-model="item.productId" filterable clearable placeholder="请选择">
+                                            <el-option
+                                            v-for="c in product"
+                                            :key="c.productId"
+                                            :label="c.fullName+'('+c.productId+')'"
+                                            :value="c.productId">
+                                            </el-option>
+                                        </el-select>
+                                    </template>
                                 </div>
                           
                                 <label class="col-sm-2 col-md-1 control-label">尽调编号</label>
@@ -255,16 +354,17 @@
                                   <input type="text" class="form-control" v-model="item.jdNo">
                                 </div>
                                 
-                                <label class="col-sm-2 col-md-1 control-label">录入时间</label>
+                                <!-- <label class="col-sm-2 col-md-1 control-label">录入时间</label>
                                 <div class="col-sm-10 col-md-2">
                                     <div class="block">
                                         <el-date-picker
                                           v-model="item.entryTime"
                                           type="date"
+                                          value-format="yyyy-MM-dd"
                                           placeholder="选择日期">
                                         </el-date-picker>
                                     </div>
-                                </div>
+                                </div> -->
                             
                           </div>
                           
@@ -315,12 +415,171 @@
                       <input type="text" class="form-control" v-model="item.entryPerson" placeholder="" />
                     </div>
                     
+                    <label class="col-sm-2 control-label">尽调编号</label>
+                        <div class="col-sm-3">
+                          <input type="text" class="form-control" v-model="item.jdNo" placeholder="" />
+                        </div>
+                  </div>
+                  
+                  <hr>
+                  
+                  <div class="form-group">
+                  
+                    <label class="col-sm-3 control-label">产品编号</label>
+                    <div class="col-sm-3">
+                        <template>
+                            <el-select v-model="item.productId" filterable clearable placeholder="请选择" @change="productChange">
+                                <el-option
+                                v-for="c in product"
+                                :key="c.productId"
+                                :label="c.fullName+'('+c.productId+')'"
+                                :value="c">
+                                </el-option>
+                            </el-select>
+                        </template>
+                    </div>
+                    
+                    <label class="col-sm-2 control-label">公司编号</label>
+                    <div class="col-sm-3">
+                        <template>
+                            <el-select v-model="item.companyId" filterable clearable placeholder="请选择" disabled>
+                                <el-option
+                                v-for="c in company"
+                                :key="c.companyId"
+                                :label="c.fullName+'('+c.companyId+')'"
+                                :value="c.companyId">
+                                </el-option>
+                            </el-select>
+                        </template>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">投资策略分类</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" v-model="item.strategyType" placeholder="" readonly="readonly"/>
+                    </div>
+                    <label class="col-sm-2 control-label">产品成立日期 </label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.productBuildTime" placeholder="" readonly="readonly"/>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">净值日期</label>
+                    <div class="col-sm-3">
+                        <div class="block">
+                          <el-date-picker
+                            v-model="item.netWorthDate"
+                            type="date"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择日期">
+                          </el-date-picker>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <hr>
+                  
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">1. 最新单位净值</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.netWorthLatest" placeholder="" />
+                    </div>
+                    <label class="col-sm-2 control-label">2. 复权累计净值</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.cumulativeWorth"  placeholder="" />
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">3. 年化收益率</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.yearProfitTate" placeholder="" />
+                    </div>
+                    <label class="col-sm-2 control-label">4. 最大连续回撤</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.lageRevoke"  placeholder="" />
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">5. 夏普比率</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.xiapuTate" placeholder="" />
+                    </div>
+                    <label class="col-sm-2 control-label">6. 信息比率</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.xinxiRate"  placeholder="" />
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">7. 卡马比率</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.kamaRate" placeholder="" />
+                    </div>
+                    <label class="col-sm-2 control-label">8. 索提诺比率</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.suotinuoRate"  placeholder="" />
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">9. D-Ratio</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.dRatio1" placeholder="" />
+                    </div>
+                    <label class="col-sm-2 control-label">10. D-Ratio_</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.dRatio2"  placeholder="" />
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">11.综合评价</label>
+                    <div class="col-sm-3">
+                      <select class="form-control" v-model="item.totalScore">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                        </select>
+                    </div>
+                  </div>
+                </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" v-on:click="add()">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="updateForm">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">更新产品业绩评分</h4>
+          </div>
+          <div class="modal-body">
+              <form class="form-horizontal" role="form">
+                  
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">录入人</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.entryPerson" placeholder="" />
+                    </div>
+                    
                     <label class="col-sm-2 control-label">录入时间</label>
                     <div class="col-sm-3">
                       <div class="block">
                           <el-date-picker
                             v-model="item.entryTime"
                             type="date"
+                            value-format="yyyy-MM-dd"
                             placeholder="选择日期">
                           </el-date-picker>
                       </div>
@@ -344,12 +603,12 @@
                     <label class="col-sm-3 control-label">产品编号</label>
                     <div class="col-sm-3">
                         <template>
-                            <el-select v-model="selectedProduct" filterable clearable placeholder="请选择">
+                            <el-select v-model="item.productId" filterable clearable placeholder="请选择" @change="productChange">
                                 <el-option
                                 v-for="c in product"
                                 :key="c.productId"
                                 :label="c.fullName+'('+c.productId+')'"
-                                :value="c.productId">
+                                :value="c">
                                 </el-option>
                             </el-select>
                         </template>
@@ -358,7 +617,7 @@
                     <label class="col-sm-2 control-label">公司编号</label>
                     <div class="col-sm-3">
                         <template>
-                            <el-select v-model="selected" filterable clearable placeholder="请选择">
+                            <el-select v-model="item.companyId" filterable clearable placeholder="请选择" disabled>
                                 <el-option
                                 v-for="c in company"
                                 :key="c.companyId"
@@ -371,164 +630,96 @@
                   </div>
                   
                   <div class="form-group">
-                    <label class="col-sm-3 control-label">3. 管理规模</label>
+                    <label class="col-sm-3 control-label">投资策略分类</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" v-model="item.adminScale" placeholder="" />
+                        <input type="text" class="form-control" v-model="item.strategyType" placeholder="" readonly="readonly"/>
                     </div>
-                    <label class="col-sm-2 control-label">4. 投资安排</label>
+                    <label class="col-sm-2 control-label">产品成立日期 </label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" v-model="item.investment" placeholder="" />
+                      <input type="text" class="form-control" v-model="item.productBuildTime" placeholder="" readonly="readonly"/>
                     </div>
                   </div>
                   
                   <div class="form-group">
-                    <label class="col-sm-3 control-label">5. 管理团队状况 </label>
+                    <label class="col-sm-3 control-label">净值日期</label>
                     <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.teamState" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">6. 合规风控体系 </label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.riskState" placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">7. 产品收益</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.productProfit" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">8. 业内知名度</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.reputation"  placeholder="" />
+                        <div class="block">
+                          <el-date-picker
+                            v-model="item.netWorthDate"
+                            type="date"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择日期">
+                          </el-date-picker>
+                      </div>
                     </div>
                   </div>
                   
                   <hr>
                   
                   <div class="form-group">
-                    <label class="col-sm-3 control-label">9. 产品推广性</label>
+                    <label class="col-sm-3 control-label">1. 最新单位净值</label>
                     <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.spreadState" placeholder="" />
+                      <input type="text" class="form-control" v-model="item.netWorthLatest" placeholder="" />
                     </div>
-                    <label class="col-sm-2 control-label">10. 过往合作情况</label>
+                    <label class="col-sm-2 control-label">2. 复权累计净值</label>
                     <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.cooperation"  placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">11. 合计评分</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.totalScore" placeholder="" />
-                    </div>
-                  </div>
-                </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary" v-on:click="add()">保存</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content" id="updateForm">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">更新管理人基本信息</h4>
-          </div>
-          <div class="modal-body">
-              <form class="form-horizontal" role="form">
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">录入人</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.entryPerson" placeholder="" />
-                    </div>
-                    
-                    <label class="col-sm-2 control-label">公司编号</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.companyId"  placeholder="" />
-                    </div>
-                    
-                  </div>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">尽调编号</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.jdNo" placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">1. 资本实力</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" v-model="item.capital" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">2. 产品发行情况</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.publishState" placeholder="" />
+                      <input type="text" class="form-control" v-model="item.cumulativeWorth"  placeholder="" />
                     </div>
                   </div>
                   
                   <div class="form-group">
-                    <label class="col-sm-3 control-label">3. 管理规模</label>
+                    <label class="col-sm-3 control-label">3. 年化收益率</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" v-model="item.adminScale" placeholder="" />
+                      <input type="text" class="form-control" v-model="item.yearProfitTate" placeholder="" />
                     </div>
-                    <label class="col-sm-2 control-label">4. 投资安排</label>
+                    <label class="col-sm-2 control-label">4. 最大连续回撤</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" v-model="item.investment" placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">5. 管理团队状况 </label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.teamState" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">6. 合规风控体系 </label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.riskState" placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">7. 产品收益</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.productProfit" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">8. 业内知名度</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.reputation"  placeholder="" />
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">9. 产品推广性</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.spreadState" placeholder="" />
-                    </div>
-                    <label class="col-sm-2 control-label">10. 过往合作情况</label>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.cooperation"  placeholder="" />
+                      <input type="text" class="form-control" v-model="item.lageRevoke"  placeholder="" />
                     </div>
                   </div>
                   
                   <div class="form-group">
-                    <label class="col-sm-3 control-label">11. 合计评分</label>
+                    <label class="col-sm-3 control-label">5. 夏普比率</label>
                     <div class="col-sm-3">
-                      <input type="text" class="form-control" v-model="item.totalScore" placeholder="" />
+                      <input type="text" class="form-control" v-model="item.xiapuTate" placeholder="" />
+                    </div>
+                    <label class="col-sm-2 control-label">6. 信息比率</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.xinxiRate"  placeholder="" />
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">7. 卡马比率</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.kamaRate" placeholder="" />
+                    </div>
+                    <label class="col-sm-2 control-label">8. 索提诺比率</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.suotinuoRate"  placeholder="" />
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">9. D-Ratio</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.dRatio1" placeholder="" />
+                    </div>
+                    <label class="col-sm-2 control-label">10. D-Ratio_</label>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" v-model="item.dRatio2"  placeholder="" />
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">11.综合评价</label>
+                    <div class="col-sm-3">
+                      <select class="form-control" v-model="item.totalScore">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                        </select>
                     </div>
                   </div>
                 </form>

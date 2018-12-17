@@ -61,7 +61,7 @@ public class CompanyInfoController {
     }
 
     @PostMapping("/selectbyconditions")
-    public ReturnBody<List<CompanyInfo>> selectByConditions(@RequestBody CompanyInfo companyInfo){
+    public ReturnBody<List<CompanyInfo>> selectByConditions(@RequestBody(required=false) CompanyInfo companyInfo){
         ReturnBody<List<CompanyInfo>> returnBody=new ReturnBody<>();
         List<CompanyInfo> list=companyInfoService.selectByConditions(companyInfo);
         returnBody.setData(list);
