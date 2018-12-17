@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -31,7 +32,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = FofException.class)
     @ResponseBody
     public ReturnHeader handleException(HttpServletRequest req, FofException e){
-
+        
         ReturnHeader header = new ReturnHeader();
         header.setErrorCode(e.getErrorCode());
         header.setErrorMsg(e.getErrorMsg());

@@ -47,7 +47,7 @@
 
 
 
-		<table schema="" tableName="PRODUCT_SCORE" domainObjectName="ProductScore"
+		<table schema="" tableName="FOF_USER" domainObjectName="FofUser"
 			enableSelectByExample="false" enableDeleteByExample="false"
 			enableCountByExample="false" enableUpdateByExample="false"
 			selectByExampleQueryId="false">

@@ -14,6 +14,7 @@ public enum ErrorConstant {
 
 
 
+
     UNKNOW_EXCEPTION("1000", "程序内部异常");
 
     private String errorCode;
