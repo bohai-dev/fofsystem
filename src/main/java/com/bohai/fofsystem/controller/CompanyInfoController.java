@@ -6,6 +6,8 @@ import com.bohai.fofsystem.exception.ErrorConstant;
 import com.bohai.fofsystem.exception.FofException;
 import com.bohai.fofsystem.service.CompanyInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +32,7 @@ public class CompanyInfoController {
        return returnBody;
     }
 
+
     @PostMapping("/modify")
     public ReturnBody<Integer> modifyCompany(@RequestBody @Valid CompanyInfo companyInfo) throws FofException{
         if (StringUtils.isEmpty(companyInfo.getCompanyId())){
@@ -40,7 +43,7 @@ public class CompanyInfoController {
         returnBody.setData(result);
         return  returnBody;
     }
-
+    @Secured("ADMIN")  //  此方法只允许 ADMIN 角色访问
     @GetMapping("/delete")
     public ReturnBody<Integer> deleteById(@RequestParam("companyId")String companyId){
         ReturnBody<Integer> returnBody=new ReturnBody<>();

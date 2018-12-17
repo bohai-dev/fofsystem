@@ -6,6 +6,7 @@ import com.bohai.fofsystem.exception.ErrorConstant;
 import com.bohai.fofsystem.exception.FofException;
 import com.bohai.fofsystem.service.ProductInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,7 @@ public class ProductInfoController {
         returnBody.setData(result);
         return returnBody;
     }
+    @Secured("ADMIN")  //  此方法只允许 ADMIN 角色访问
     @GetMapping("/delete")
     public ReturnBody<Integer> deleteProduct(@RequestParam("productId")String productId){
         ReturnBody<Integer> returnBody=new ReturnBody<>();

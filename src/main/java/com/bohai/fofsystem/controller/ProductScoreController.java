@@ -6,6 +6,7 @@ import com.bohai.fofsystem.exception.ErrorConstant;
 import com.bohai.fofsystem.exception.FofException;
 import com.bohai.fofsystem.service.ProductScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,7 +49,7 @@ public class ProductScoreController {
 
     }
 
-
+    @Secured("ADMIN")  //  此方法只允许 ADMIN 角色访问
     @GetMapping("/delete")
     public ReturnBody<Integer> deleteProductScore(@RequestParam("scoreId")String scoreId){
         ReturnBody<Integer> returnBody=new ReturnBody<>();
