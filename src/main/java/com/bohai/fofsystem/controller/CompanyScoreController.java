@@ -45,7 +45,7 @@ public class CompanyScoreController {
 
     }
 
-    @Secured("ADMIN")  //  此方法只允许 ADMIN 角色访问
+    @Secured("ROLE_ADMIN")  //  此方法只允许 ADMIN 角色访问
     @GetMapping("/delete")
     public ReturnBody<Integer> deleteCompanyScore(@RequestParam("companyScoreId")String scoreId){
        ReturnBody<Integer> returnBody=new ReturnBody<>();

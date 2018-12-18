@@ -43,7 +43,7 @@ public class CompanyInfoController {
         returnBody.setData(result);
         return  returnBody;
     }
-    @Secured("ADMIN")  //  此方法只允许 ADMIN 角色访问
+    @Secured({"ROLE_ADMIN"})  //  此方法只允许 ADMIN 角色访问
     @GetMapping("/delete")
     public ReturnBody<Integer> deleteById(@RequestParam("companyId")String companyId){
         ReturnBody<Integer> returnBody=new ReturnBody<>();

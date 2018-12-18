@@ -23,11 +23,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
-           /*  auth
+             auth
                 .inMemoryAuthentication()
                 .withUser("user").password(passwordEncoder().encode("password")).roles("USER")
                 .and()
-                .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN");*/
+                .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN");
            auth.userDetailsService(fofUserService);
     }
 
@@ -51,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/css/**", "/js/**", "/images/**").permitAll()   //静态资源不拦截
+                .anyRequest().authenticated()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

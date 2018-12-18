@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <header th:fragment="header(title,script,style)">
 
     <meta charset="utf-8">
@@ -34,7 +34,7 @@
 	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 	<!-- 引入组件库 -->
 	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
-	
+
 	<script th:replace="${script}"></script>
 	<style th:replace="${style}"></style>
 
@@ -55,7 +55,7 @@
 
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
+				<ul class="nav navbar-nav" >
 					<li><a href="home">管理人信息</a></li>
 					<li><a href="product">产品信息</a></li>
 					<li><a href="adminScore">管理人评分</a></li>
@@ -77,24 +77,39 @@
 		</nav>
 	</div>
 	
-	<div th:fragment="leftnavbar">
-	   <ul class="nav nav-list">
+	<div th:fragment="leftnavbar" >
+	   <ul class="nav nav-list" id="leftnavbar">
                 <li class="nav-header">
                     菜单
                 </li>
                 <li class="active">
-                    <a href="home">管理人基本信息表</a>
+                    <a href="home"  v-on:click="checkItem">管理人基本信息表</a>
                 </li>
                 <li>
-                    <a href="product">产品信息表</a>
+                    <a href="product" v-on:click="checkItem">产品信息表</a>
                 </li>
                 <li>
-                    <a href="adminScore">管理人评分表</a>
+                    <a href="adminScore"  v-on:click="checkItem">管理人评分表</a>
                 </li>
                 <li>
-                    <a href="productScore">产品业绩评分表</a>
+                    <a href="productScore"  v-on:click="checkItem">产品业绩评分表</a>
                 </li>
             </ul>
+		<!--<script type="text/javascript">
+            var  leftnavbar=new Vue({
+
+                el:'#leftnavbar',
+                data:{},
+                methods:{
+                    checkItem:function (event) {
+                        console.log(123)
+                    }
+                }
+            });
+
+
+		</script>-->
 	</div>
+
 </body>
 </html>

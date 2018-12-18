@@ -41,7 +41,7 @@ public class ProductInfoController {
         returnBody.setData(result);
         return returnBody;
     }
-    @Secured("ADMIN")  //  此方法只允许 ADMIN 角色访问
+    @Secured("ROLE_ADMIN")  //  此方法只允许 ADMIN 角色访问
     @GetMapping("/delete")
     public ReturnBody<Integer> deleteProduct(@RequestParam("productId")String productId){
         ReturnBody<Integer> returnBody=new ReturnBody<>();
