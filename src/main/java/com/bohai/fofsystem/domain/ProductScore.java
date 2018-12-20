@@ -56,6 +56,228 @@ public class ProductScore {
     private String backupColumn1;
     //备用字段2
     private String isDelete;
+    
+    //最新单位净值
+    private Double netWorthLatestDown;
+    //复权累计净值
+    private Double cumulativeWorthDown;
+    //年化收益率
+    private Double yearProfitTateDown;
+    //最大连续回撤
+    private Double lageRevokeDown;
+    //夏普比率
+    private Double xiapuTateDown;
+    //信息比率
+    private Double xinxiRateDown;
+    //卡马比率
+    private Double kamaRateDown;
+    //索提诺比率
+    private Double suotinuoRateDown;
+    // D-Ratio
+    private Double dRatio1Down;
+    // D-Ratio_
+    private Double dRatio2Down;
+    //综合评价
+    private Double totalScoreDown;
+        //最新单位净值
+    private Double netWorthLatestUp;
+    //复权累计净值
+    private Double cumulativeWorthUp;
+    //年化收益率
+    private Double yearProfitTateUp;
+    //最大连续回撤
+    private Double lageRevokeUp;
+    //夏普比率
+    private Double xiapuTateUp;
+    //信息比率
+    private Double xinxiRateUp;
+    //卡马比率
+    private Double kamaRateUp;
+    //索提诺比率
+    private Double suotinuoRateUp;
+    // D-Ratio
+    private Double dRatio1Up;
+    // D-Ratio_
+    private Double dRatio2Up;
+    //综合评价
+    private Double totalScoreUp;
+    
+
+    public Double getNetWorthLatestDown() {
+        return netWorthLatestDown;
+    }
+
+    public void setNetWorthLatestDown(Double netWorthLatestDown) {
+        this.netWorthLatestDown = netWorthLatestDown;
+    }
+
+    public Double getCumulativeWorthDown() {
+        return cumulativeWorthDown;
+    }
+
+    public void setCumulativeWorthDown(Double cumulativeWorthDown) {
+        this.cumulativeWorthDown = cumulativeWorthDown;
+    }
+
+    public Double getYearProfitTateDown() {
+        return yearProfitTateDown;
+    }
+
+    public void setYearProfitTateDown(Double yearProfitTateDown) {
+        this.yearProfitTateDown = yearProfitTateDown;
+    }
+
+    public Double getLageRevokeDown() {
+        return lageRevokeDown;
+    }
+
+    public void setLageRevokeDown(Double lageRevokeDown) {
+        this.lageRevokeDown = lageRevokeDown;
+    }
+
+    public Double getXiapuTateDown() {
+        return xiapuTateDown;
+    }
+
+    public void setXiapuTateDown(Double xiapuTateDown) {
+        this.xiapuTateDown = xiapuTateDown;
+    }
+
+    public Double getXinxiRateDown() {
+        return xinxiRateDown;
+    }
+
+    public void setXinxiRateDown(Double xinxiRateDown) {
+        this.xinxiRateDown = xinxiRateDown;
+    }
+
+    public Double getKamaRateDown() {
+        return kamaRateDown;
+    }
+
+    public void setKamaRateDown(Double kamaRateDown) {
+        this.kamaRateDown = kamaRateDown;
+    }
+
+    public Double getSuotinuoRateDown() {
+        return suotinuoRateDown;
+    }
+
+    public void setSuotinuoRateDown(Double suotinuoRateDown) {
+        this.suotinuoRateDown = suotinuoRateDown;
+    }
+
+    public Double getdRatio1Down() {
+        return dRatio1Down;
+    }
+
+    public void setdRatio1Down(Double dRatio1Down) {
+        this.dRatio1Down = dRatio1Down;
+    }
+
+    public Double getdRatio2Down() {
+        return dRatio2Down;
+    }
+
+    public void setdRatio2Down(Double dRatio2Down) {
+        this.dRatio2Down = dRatio2Down;
+    }
+
+    public Double getTotalScoreDown() {
+        return totalScoreDown;
+    }
+
+    public void setTotalScoreDown(Double totalScoreDown) {
+        this.totalScoreDown = totalScoreDown;
+    }
+
+    public Double getNetWorthLatestUp() {
+        return netWorthLatestUp;
+    }
+
+    public void setNetWorthLatestUp(Double netWorthLatestUp) {
+        this.netWorthLatestUp = netWorthLatestUp;
+    }
+
+    public Double getCumulativeWorthUp() {
+        return cumulativeWorthUp;
+    }
+
+    public void setCumulativeWorthUp(Double cumulativeWorthUp) {
+        this.cumulativeWorthUp = cumulativeWorthUp;
+    }
+
+    public Double getYearProfitTateUp() {
+        return yearProfitTateUp;
+    }
+
+    public void setYearProfitTateUp(Double yearProfitTateUp) {
+        this.yearProfitTateUp = yearProfitTateUp;
+    }
+
+    public Double getLageRevokeUp() {
+        return lageRevokeUp;
+    }
+
+    public void setLageRevokeUp(Double lageRevokeUp) {
+        this.lageRevokeUp = lageRevokeUp;
+    }
+
+    public Double getXiapuTateUp() {
+        return xiapuTateUp;
+    }
+
+    public void setXiapuTateUp(Double xiapuTateUp) {
+        this.xiapuTateUp = xiapuTateUp;
+    }
+
+    public Double getXinxiRateUp() {
+        return xinxiRateUp;
+    }
+
+    public void setXinxiRateUp(Double xinxiRateUp) {
+        this.xinxiRateUp = xinxiRateUp;
+    }
+
+    public Double getKamaRateUp() {
+        return kamaRateUp;
+    }
+
+    public void setKamaRateUp(Double kamaRateUp) {
+        this.kamaRateUp = kamaRateUp;
+    }
+
+    public Double getSuotinuoRateUp() {
+        return suotinuoRateUp;
+    }
+
+    public void setSuotinuoRateUp(Double suotinuoRateUp) {
+        this.suotinuoRateUp = suotinuoRateUp;
+    }
+
+    public Double getdRatio1Up() {
+        return dRatio1Up;
+    }
+
+    public void setdRatio1Up(Double dRatio1Up) {
+        this.dRatio1Up = dRatio1Up;
+    }
+
+    public Double getdRatio2Up() {
+        return dRatio2Up;
+    }
+
+    public void setdRatio2Up(Double dRatio2Up) {
+        this.dRatio2Up = dRatio2Up;
+    }
+
+    public Double getTotalScoreUp() {
+        return totalScoreUp;
+    }
+
+    public void setTotalScoreUp(Double totalScoreUp) {
+        this.totalScoreUp = totalScoreUp;
+    }
 
     public String getScoreId() {
         return scoreId;

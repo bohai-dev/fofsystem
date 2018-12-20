@@ -46,6 +46,30 @@
                     query:function(){
                         $('#table').bootstrapTable('refresh', {query: this.item});
                     },
+                    /* clearQuery:function(){
+                        this.item.capitalDown=null;
+                        this.item.capitalUp=null;
+                        this.item.publishStateDown=null;
+                        this.item.publishStateUp=null;
+                        this.item.adminScaleDown=null;
+                        this.item.adminScaleUp=null;
+                        this.item.investmentDown=null;
+                        this.item.investmentUp=null;
+                        this.item.teamStateDown=null;
+                        this.item.teamStateUp=null;
+                        this.item.riskStateDown=null;
+                        this.item.riskStateUp=null;
+                        this.item.productProfitDown=null;
+                        this.item.productProfitUp=null;
+                        this.item.reputationDown=null;
+                        this.item.reputationUp=null;
+                        this.item.spreadStateDown=null;
+                        this.item.spreadStateUp=null;
+                        this.item.cooperationDown=null;
+                        this.item.cooperationUp=null;
+                        this.item.totalScoreDown=null;
+                        this.item.totalScoreUp=null;
+                    }, */
                     queryCompany:function(){
                         this.$http.get('company/selectall').then(response => {
                             // success callback
@@ -261,15 +285,125 @@
                                 <input type="text" class="form-control" v-model="item.jdNo">
                             </div>
 
-                            <label class="col-sm-2 col-md-1 control-label">录入时间</label>
+                            <!-- <label class="col-sm-2 col-md-1 control-label">录入时间</label>
                             <div class="col-sm-10 col-md-2">
                                 <div class="block">
                                     <el-date-picker v-model="item.entryTime" type="date"
                                         value-format="yyyy-MM-dd" placeholder="选择日期"> 
                                     </el-date-picker>
                                 </div>
-                            </div>
-
+                            </div> -->
+                        </div>
+                        
+                        <div class="col-sm-12 col-md-12">
+                            <el-collapse>
+                              <el-collapse-item title="更多查询">
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-md-1 control-label">资本实力</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.capitalDown" :precision="2" :step="0.1" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.capitalUp" :precision="2" :step="0.1" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                    
+                                    <label class="col-sm-2 col-md-1 control-label">产品发行情况</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.publishStateDown" :precision="2" :step="0.1" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.publishStateUp" :precision="2" :step="0.1" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-md-1 control-label">管理规模</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.adminScaleDown" :precision="2" :step="0.1" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.adminScaleUp" :precision="2" :step="0.1" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                    
+                                    <label class="col-sm-2 col-md-1 control-label">投资安排</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.investmentDown" :precision="2" :step="0.1" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.investmentUp" :precision="2" :step="0.1" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-md-1 control-label">管理团队状况</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.teamStateDown" :precision="2" :step="0.1" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.teamStateUp" :precision="2" :step="0.1" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                    
+                                    <label class="col-sm-2 col-md-1 control-label">合规风控体系</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.riskStateDown" :precision="2" :step="0.1" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.riskStateUp" :precision="2" :step="0.1" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-md-1 control-label">产品收益</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.productProfitDown" :precision="2" :step="0.1" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.productProfitUp" :precision="2" :step="0.1" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                    
+                                    <label class="col-sm-2 col-md-1 control-label">业内知名度</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.reputationDown" :precision="2" :step="0.1" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.reputationUp" :precision="2" :step="0.1" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-md-1 control-label">产品推广性</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.spreadStateDown" :precision="2" :step="0.1" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.spreadStateUp" :precision="2" :step="0.1" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                    
+                                    <label class="col-sm-2 col-md-1 control-label">过往合作情况</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.cooperationDown" :precision="2" :step="0.1" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.cooperationUp" :precision="2" :step="0.1" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-md-1 control-label">合计评分</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.totalScoreDown" :precision="2" :step="0.1" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.totalScoreUp" :precision="2" :step="0.1" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                    
+                                    <!-- <div class="col-sm-10 col-md-2">
+                                        <el-button @click="clearQuery()">清除</el-button>
+                                    </div> -->
+                                </div>
+                                
+                              </el-collapse-item>
+                            </el-collapse>
                         </div>
 
                         <div class="form-group"></div>

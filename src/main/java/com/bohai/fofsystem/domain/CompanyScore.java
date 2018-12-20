@@ -50,6 +50,30 @@ public class CompanyScore {
     private String backColumn2;
     //删除标志：0未删除，1已删除
     private String isDelete;
+    
+    //查询字段
+    private Double capitalDown;
+    private Double capitalUp;
+    private Double publishStateDown;
+    private Double publishStateUp;
+    private Double adminScaleDown;
+    private Double adminScaleUp;
+    private Double investmentDown;
+    private Double investmentUp;
+    private Double teamStateDown;
+    private Double teamStateUp;
+    private Double riskStateDown;
+    private Double riskStateUp;
+    private Double productProfitDown;
+    private Double productProfitUp;
+    private Double reputationDown;
+    private Double reputationUp;
+    private Double spreadStateDown;
+    private Double spreadStateUp;
+    private Double cooperationDown;
+    private Double cooperationUp;
+    private Double totalScoreDown;
+    private Double totalScoreUp;
 
     public String getScoreId() {
         return scoreId;
@@ -209,6 +233,182 @@ public class CompanyScore {
 
     public void setIsDelete(String isDelete) {
         this.isDelete = isDelete == null ? null : isDelete.trim();
+    }
+    
+    public Double getCapitalDown() {
+        return capitalDown;
+    }
+
+    public void setCapitalDown(Double capitalDown) {
+        this.capitalDown = capitalDown;
+    }
+
+    public Double getCapitalUp() {
+        return capitalUp;
+    }
+
+    public void setCapitalUp(Double capitalUp) {
+        this.capitalUp = capitalUp;
+    }
+
+    public Double getPublishStateDown() {
+        return publishStateDown;
+    }
+
+    public void setPublishStateDown(Double publishStateDown) {
+        this.publishStateDown = publishStateDown;
+    }
+
+    public Double getPublishStateUp() {
+        return publishStateUp;
+    }
+
+    public void setPublishStateUp(Double publishStateUp) {
+        this.publishStateUp = publishStateUp;
+    }
+
+    public Double getAdminScaleDown() {
+        return adminScaleDown;
+    }
+
+    public void setAdminScaleDown(Double adminScaleDown) {
+        this.adminScaleDown = adminScaleDown;
+    }
+
+    public Double getAdminScaleUp() {
+        return adminScaleUp;
+    }
+
+    public void setAdminScaleUp(Double adminScaleUp) {
+        this.adminScaleUp = adminScaleUp;
+    }
+
+    public Double getInvestmentDown() {
+        return investmentDown;
+    }
+
+    public void setInvestmentDown(Double investmentDown) {
+        this.investmentDown = investmentDown;
+    }
+
+    public Double getInvestmentUp() {
+        return investmentUp;
+    }
+
+    public void setInvestmentUp(Double investmentUp) {
+        this.investmentUp = investmentUp;
+    }
+
+    public Double getTeamStateDown() {
+        return teamStateDown;
+    }
+
+    public void setTeamStateDown(Double teamStateDown) {
+        this.teamStateDown = teamStateDown;
+    }
+
+    public Double getTeamStateUp() {
+        return teamStateUp;
+    }
+
+    public void setTeamStateUp(Double teamStateUp) {
+        this.teamStateUp = teamStateUp;
+    }
+
+    public Double getRiskStateDown() {
+        return riskStateDown;
+    }
+
+    public void setRiskStateDown(Double riskStateDown) {
+        this.riskStateDown = riskStateDown;
+    }
+
+    public Double getRiskStateUp() {
+        return riskStateUp;
+    }
+
+    public void setRiskStateUp(Double riskStateUp) {
+        this.riskStateUp = riskStateUp;
+    }
+
+    public Double getProductProfitDown() {
+        return productProfitDown;
+    }
+
+    public void setProductProfitDown(Double productProfitDown) {
+        this.productProfitDown = productProfitDown;
+    }
+
+    public Double getProductProfitUp() {
+        return productProfitUp;
+    }
+
+    public void setProductProfitUp(Double productProfitUp) {
+        this.productProfitUp = productProfitUp;
+    }
+
+    public Double getReputationDown() {
+        return reputationDown;
+    }
+
+    public void setReputationDown(Double reputationDown) {
+        this.reputationDown = reputationDown;
+    }
+
+    public Double getReputationUp() {
+        return reputationUp;
+    }
+
+    public void setReputationUp(Double reputationUp) {
+        this.reputationUp = reputationUp;
+    }
+
+    public Double getSpreadStateDown() {
+        return spreadStateDown;
+    }
+
+    public void setSpreadStateDown(Double spreadStateDown) {
+        this.spreadStateDown = spreadStateDown;
+    }
+
+    public Double getSpreadStateUp() {
+        return spreadStateUp;
+    }
+
+    public void setSpreadStateUp(Double spreadStateUp) {
+        this.spreadStateUp = spreadStateUp;
+    }
+
+    public Double getCooperationDown() {
+        return cooperationDown;
+    }
+
+    public void setCooperationDown(Double cooperationDown) {
+        this.cooperationDown = cooperationDown;
+    }
+
+    public Double getCooperationUp() {
+        return cooperationUp;
+    }
+
+    public void setCooperationUp(Double cooperationUp) {
+        this.cooperationUp = cooperationUp;
+    }
+
+    public Double getTotalScoreDown() {
+        return totalScoreDown;
+    }
+
+    public void setTotalScoreDown(Double totalScoreDown) {
+        this.totalScoreDown = totalScoreDown;
+    }
+
+    public Double getTotalScoreUp() {
+        return totalScoreUp;
+    }
+
+    public void setTotalScoreUp(Double totalScoreUp) {
+        this.totalScoreUp = totalScoreUp;
     }
 
     @Override

@@ -410,7 +410,7 @@
         and PRODUCT_ID = #{productId,jdbcType=VARCHAR}
       </if>
       <if test="fullName!=null and fullName!='' ">
-        and FULL_NAME = #{fullName,jdbcType=VARCHAR}
+        and FULL_NAME like '%'||#{fullName,jdbcType=VARCHAR}||'%'
       </if>
       <if test="simpleName!=null and simpleName!='' ">
         and SIMPLE_NAME = #{simpleName,jdbcType=VARCHAR}

@@ -373,10 +373,119 @@
                             
                           </div>
                           
+                          <div class="col-sm-12 col-md-12">
+                            <el-collapse>
+                              <el-collapse-item title="更多查询">
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-md-1 control-label">最新单位净值</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.netWorthLatestDown" :precision="3" :step="0.001" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.netWorthLatestUp" :precision="3" :step="0.001" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                    
+                                    <label class="col-sm-2 col-md-1 control-label">复权累计净值</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.cumulativeWorthDown" :precision="3" :step="0.001" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.cumulativeWorthUp" :precision="3" :step="0.001" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-md-1 control-label">年化收益率</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.yearProfitTateDown" :precision="3" :step="0.001" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.yearProfitTateUp" :precision="3" :step="0.001" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                    
+                                    <label class="col-sm-2 col-md-1 control-label">最大连续回撤</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.lageRevokeDown" :precision="3" :step="0.001" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.lageRevokeUp" :precision="3" :step="0.001" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-md-1 control-label">夏普比率</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.xiapuTateDown" :precision="3" :step="0.001" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.xiapuTateUp" :precision="3" :step="0.001" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                    
+                                    <label class="col-sm-2 col-md-1 control-label">信息比率</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.xinxiRateDown" :precision="3" :step="0.001" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.xinxiRateUp" :precision="3" :step="0.001" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-md-1 control-label">卡马比率</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.kamaRateDown" :precision="3" :step="0.001" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.kamaRateUp" :precision="3" :step="0.001" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                    
+                                    <label class="col-sm-2 col-md-1 control-label">索提诺比率</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.suotinuoRateDown" :precision="3" :step="0.001" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.suotinuoRateUp" :precision="3" :step="0.001" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-md-1 control-label">D-Ratio</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.dRatio1Down" :precision="3" :step="0.001" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.dRatio1Up" :precision="3" :step="0.001" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                    
+                                    <label class="col-sm-2 col-md-1 control-label">D-Ratio_</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.dRatio2Down" :precision="3" :step="0.001" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.dRatio2Up" :precision="3" :step="0.001" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-md-1 control-label">综合评分</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <template>
+                                          <el-input-number v-model="item.totalScoreDown" :precision="0" :step="1" :min="0" ></el-input-number>&nbsp;至&nbsp;
+                                          <el-input-number v-model="item.totalScoreUp" :precision="0" :step="1" :min="0" ></el-input-number>
+                                        </template>
+                                    </div>
+                                    
+                                    <!-- <div class="col-sm-10 col-md-2">
+                                        <el-button @click="clearQuery()">清除</el-button>
+                                    </div> -->
+                                </div>
+                                
+                              </el-collapse-item>
+                            </el-collapse>
+                          </div>
+                          
                           <div class="form-group">
                                 
-                                
-                            
                           </div>
                           
                           <div class="form-group">

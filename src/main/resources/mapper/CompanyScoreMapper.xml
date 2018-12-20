@@ -283,6 +283,72 @@
       <if test="jdNo !=null and jdNo!='' ">
         AND JD_NO = #{jdNo,jdbcType=VARCHAR}
       </if>
+      <if test="capitalDown !=null">
+        AND CAPITAL <![CDATA[>=]]> #{capitalDown,jdbcType=DECIMAL}
+      </if>
+      <if test="capitalUp !=null">
+        AND CAPITAL <![CDATA[<=]]> #{capitalUp,jdbcType=DECIMAL}
+      </if>
+      <if test="publishStateDown !=null">
+        AND PUBLISH_STATE <![CDATA[>=]]> #{publishStateDown,jdbcType=DECIMAL}
+      </if>
+      <if test="publishStateUp !=null">
+        AND PUBLISH_STATE <![CDATA[<=]]> #{publishStateUp,jdbcType=DECIMAL}
+      </if>
+      <if test="adminScaleDown !=null">
+        AND ADMIN_SCALE <![CDATA[>=]]> #{adminScaleDown,jdbcType=DECIMAL}
+      </if>
+      <if test="adminScaleUp !=null">
+        AND ADMIN_SCALE <![CDATA[<=]]> #{adminScaleUp,jdbcType=DECIMAL}
+      </if>
+      <if test="investmentDown !=null">
+        AND INVESTMENT <![CDATA[>=]]> #{investmentDown,jdbcType=DECIMAL}
+      </if>
+      <if test="investmentUp !=null">
+        AND INVESTMENT <![CDATA[<=]]> #{investmentUp,jdbcType=DECIMAL}
+      </if>
+      <if test="teamStateDown !=null">
+        AND TEAM_STATE <![CDATA[>=]]> #{teamStateDown,jdbcType=DECIMAL}
+      </if>
+      <if test="teamStateUp !=null">
+        AND TEAM_STATE <![CDATA[<=]]> #{teamStateUp,jdbcType=DECIMAL}
+      </if>
+      <if test="riskStateDown !=null">
+        AND RISK_STATE <![CDATA[>=]]> #{riskStateDown,jdbcType=DECIMAL}
+      </if>
+      <if test="riskStateUp !=null">
+        AND RISK_STATE <![CDATA[<=]]> #{riskStateUp,jdbcType=DECIMAL}
+      </if>
+      <if test="productProfitDown !=null">
+        AND PRODUCT_PROFIT <![CDATA[>=]]> #{productProfitDown,jdbcType=DECIMAL}
+      </if>
+      <if test="productProfitUp !=null">
+        AND PRODUCT_PROFIT <![CDATA[<=]]> #{productProfitUp,jdbcType=DECIMAL}
+      </if>
+      <if test="reputationDown !=null">
+        AND REPUTATION <![CDATA[>=]]> #{reputationDown,jdbcType=DECIMAL}
+      </if>
+      <if test="reputationUp !=null">
+        AND REPUTATION <![CDATA[<=]]> #{reputationUp,jdbcType=DECIMAL}
+      </if>
+      <if test="spreadStateDown !=null">
+        AND SPREAD_STATE <![CDATA[>=]]> #{spreadStateDown,jdbcType=DECIMAL}
+      </if>
+      <if test="spreadStateUp !=null">
+        AND SPREAD_STATE <![CDATA[<=]]> #{spreadStateUp,jdbcType=DECIMAL}
+      </if>
+      <if test="cooperationDown !=null">
+        AND COOPERATION <![CDATA[>=]]> #{cooperationDown,jdbcType=DECIMAL}
+      </if>
+      <if test="cooperationUp !=null">
+        AND COOPERATION <![CDATA[<=]]> #{cooperationUp,jdbcType=DECIMAL}
+      </if>
+      <if test="totalScoreDown !=null">
+        AND TOTAL_SCORE <![CDATA[>=]]> #{totalScoreDown,jdbcType=DECIMAL}
+      </if>
+      <if test="totalScoreUp !=null">
+        AND TOTAL_SCORE <![CDATA[<=]]> #{totalScoreUp,jdbcType=DECIMAL}
+      </if>
       AND IS_DELETE='0'
     </where>
      ORDER BY ENTRY_TIME DESC

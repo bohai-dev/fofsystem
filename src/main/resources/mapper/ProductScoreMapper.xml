@@ -310,30 +310,96 @@
         from PRODUCT_SCORE
         <where>
 
-            <if test="scoreId !=null and scoreId!='' ">
-                SCORE_ID = #{scoreId,jdbcType=VARCHAR}
-            </if>
-            <if test="productId !=null and productId!='' ">
-                PRODUCT_ID = #{productId,jdbcType=VARCHAR}
-            </if>
-            <if test="entryPerson !=null and entryPerson!='' ">
-                AND ENTRY_PERSON = #{entryPerson,jdbcType=VARCHAR}
-            </if>
-            <if test="companyId !=null and companyId!='' ">
-                AND COMPANY_ID = #{companyId,jdbcType=VARCHAR}
-            </if>
-            <if test="jdNo !=null and jdNo!='' " >
-                AND JD_NO = #{jdNo,jdbcType=VARCHAR}
-            </if>
-            <if test="strategyType !=null and strategyType!='' ">
-                AND STRATEGY_TYPE = #{strategyType,jdbcType=VARCHAR}
-            </if>
-            <if test="netWorthDate !=null and netWorthDate!='' ">
-                AND NET_WORTH_DATE = #{netWorthDate,jdbcType=VARCHAR}
-            </if>
-            <if test="productBuildTime !=null and productBuildTime!='' ">
-                AND PRODUCT_BUILD_TIME = #{productBuildTime,jdbcType=VARCHAR}
-            </if>
+          <if test="scoreId !=null and scoreId!='' ">
+              SCORE_ID = #{scoreId,jdbcType=VARCHAR}
+          </if>
+          <if test="productId !=null and productId!='' ">
+              PRODUCT_ID = #{productId,jdbcType=VARCHAR}
+          </if>
+          <if test="entryPerson !=null and entryPerson!='' ">
+              AND ENTRY_PERSON = #{entryPerson,jdbcType=VARCHAR}
+          </if>
+          <if test="companyId !=null and companyId!='' ">
+              AND COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+          </if>
+          <if test="jdNo !=null and jdNo!='' " >
+              AND JD_NO = #{jdNo,jdbcType=VARCHAR}
+          </if>
+          <if test="strategyType !=null and strategyType!='' ">
+              AND STRATEGY_TYPE = #{strategyType,jdbcType=VARCHAR}
+          </if>
+          <if test="netWorthDate !=null and netWorthDate!='' ">
+              AND NET_WORTH_DATE = #{netWorthDate,jdbcType=VARCHAR}
+          </if>
+          <if test="productBuildTime !=null and productBuildTime!='' ">
+              AND PRODUCT_BUILD_TIME = #{productBuildTime,jdbcType=VARCHAR}
+          </if>
+          <if test="netWorthLatestDown !=null">
+            AND NET_WORTH_LATEST <![CDATA[>=]]> #{netWorthLatestDown,jdbcType=DECIMAL}
+          </if>
+          <if test="netWorthLatestUp !=null">
+            AND NET_WORTH_LATEST <![CDATA[<=]]> #{netWorthLatestUp,jdbcType=DECIMAL}
+          </if>
+          <if test="cumulativeWorthDown !=null">
+            AND CUMULATIVE_WORTH <![CDATA[>=]]> #{cumulativeWorthDown,jdbcType=DECIMAL}
+          </if>
+          <if test="cumulativeWorthUp !=null">
+            AND CUMULATIVE_WORTH <![CDATA[<=]]> #{cumulativeWorthUp,jdbcType=DECIMAL}
+          </if>
+          <if test="yearProfitTateDown !=null">
+            AND YEAR_PROFIT_TATE <![CDATA[>=]]> #{yearProfitTateDown,jdbcType=DECIMAL}
+          </if>
+          <if test="yearProfitTateUp !=null">
+            AND YEAR_PROFIT_TATE <![CDATA[<=]]> #{yearProfitTateUp,jdbcType=DECIMAL}
+          </if>
+          <if test="lageRevokeDown !=null">
+            AND LAGE_REVOKE <![CDATA[>=]]> #{lageRevokeDown,jdbcType=DECIMAL}
+          </if>
+          <if test="lageRevokeUp !=null">
+            AND LAGE_REVOKE <![CDATA[<=]]> #{lageRevokeUp,jdbcType=DECIMAL}
+          </if>
+          <if test="xiapuTateDown !=null">
+            AND XIAPU_TATE <![CDATA[>=]]> #{xiapuTateDown,jdbcType=DECIMAL}
+          </if>
+          <if test="xiapuTateUp !=null">
+            AND XIAPU_TATE <![CDATA[<=]]> #{xiapuTateUp,jdbcType=DECIMAL}
+          </if>
+          <if test="xinxiRateDown !=null">
+            AND XINXI_RATE <![CDATA[>=]]> #{xinxiRateDown,jdbcType=DECIMAL}
+          </if>
+          <if test="xinxiRateUp !=null">
+            AND XINXI_RATE <![CDATA[<=]]> #{xinxiRateUp,jdbcType=DECIMAL}
+          </if>
+          <if test="kamaRateDown !=null">
+            AND KAMA_RATE <![CDATA[>=]]> #{kamaRateDown,jdbcType=DECIMAL}
+          </if>
+          <if test="kamaRateUp !=null">
+            AND KAMA_RATE <![CDATA[<=]]> #{kamaRateUp,jdbcType=DECIMAL}
+          </if>
+          <if test="suotinuoRateDown !=null">
+            AND SUOTINUO_RATE <![CDATA[>=]]> #{suotinuoRateDown,jdbcType=DECIMAL}
+          </if>
+          <if test="suotinuoRateUp !=null">
+            AND SUOTINUO_RATE <![CDATA[<=]]> #{suotinuoRateUp,jdbcType=DECIMAL}
+          </if>
+          <if test="dRatio1Down !=null">
+            AND D_RATIO1 <![CDATA[>=]]> #{dRatio1Down,jdbcType=DECIMAL}
+          </if>
+          <if test="dRatio1Up !=null">
+            AND D_RATIO1 <![CDATA[<=]]> #{dRatio1Up,jdbcType=DECIMAL}
+          </if>
+          <if test="dRatio2Down !=null">
+            AND D_RATIO2 <![CDATA[>=]]> #{dRatio2Down,jdbcType=DECIMAL}
+          </if>
+          <if test="dRatio2Up !=null">
+            AND D_RATIO2 <![CDATA[<=]]> #{dRatio2Up,jdbcType=DECIMAL}
+          </if>
+          <if test="totalScoreDown !=null">
+            AND TOTAL_SCORE <![CDATA[>=]]> #{totalScoreDown,jdbcType=DECIMAL}
+          </if>
+          <if test="totalScoreUp !=null">
+            AND TOTAL_SCORE <![CDATA[<=]]> #{totalScoreUp,jdbcType=DECIMAL}
+          </if>
             and IS_DELETE='0'
         </where>
         ORDER BY ENTRY_TIME DESC
